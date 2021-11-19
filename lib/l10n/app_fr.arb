@@ -1,0 +1,126 @@
+{
+    "loginTitle": "Login",
+    "@loginTitle": {
+      "description": "Titre login"
+    },
+    "registerTitle": "Créer mon compte",
+    "@registernTitle": {
+      "description": "Titre de la page d'enregistrement"
+    },
+    "settingsTitle": "Paramètres",
+    "@settingsTitle": {
+      "description": "Titre paramètres"
+    },
+    "emailField": "E-mail",
+    "@emailField": {
+      "description": "champs e-mail"
+    },
+    "passwordField": "Mot de passe",
+    "@passwordField": {
+      "description": "champs mot de passe"
+    },
+    "connexionButton": "Connexion",
+    "@connexionButton": {
+      "description": "Bouton de connexion"
+    },
+    "registerButton": "Créer un compte",
+    "@registerButton": {
+      "description": "Bouton de Créer un compte"
+    },
+    "noLinkLabel": "Aucun lien",
+    "@noLinkLabel": {
+      "description": "Aucun lien"
+    },
+    "gotToRegisterLink": "M'enregistrer",
+    "@gotToRegisterLink": {
+      "description": "Lien vers la page d'enregistrement"
+    },
+    "gotToLoginLink": "Me connecter",
+    "@gotToLoginLink": {
+      "description": "Lien vers la page de connexion"
+    },
+    "loginErrorBadCredentials": "Vos identifiants ne sont pas corrects",
+    "@loginErrorBadCredentials": {
+      "description": "Vos identifiants ne sont pas corrects"
+    },
+    "registerErrorEmailAlreadyExists": "Vous ne pouvez pas vous inscrire avec cet e-mail.",
+    "@registerErrorEmailAlreadyExists": {
+      "description": "Vous ne pouvez pas vous inscrire avec cet e-mail."
+    },
+    "bottomNavigationHome": "Home",
+    "@bottomNavigationHome": {
+      "description": "Home."
+    },
+    "bottomNavigationLinks": "Liens",
+    "@bottomNavigationLinks": {
+      "description": "Liens."
+    },
+    "settingsItemTitle": "Se déconnecter",
+    "@settingsItemTitle": {
+      "description": "Se déconnecter"
+    },
+    "linkFormCreatorTitle": "Éditeur de lien",
+    "@settingsItemTitle": {
+      "description": "Éditeur de lien"
+    },
+    "linkFormCreatorLink": "URL du site Web*",
+    "@linkFormCreatorLink": {
+      "description": "URL du site Web*"
+    },
+    "linkFormCreatorLinkHelper": "L'url complete de votre site (e.g. https://www.example.com)",
+    "@linkFormCreatorLinkHelper": {
+      "description": "L'url complete de votre site (e.g. https://www.example.com)"
+    },
+    "linkFormCreatorSource": "Source du trafic",
+    "@linkFormCreatorSource": {
+      "description": "Source du trafic"
+    },
+    "linkFormCreatorSourceHelper": "La source du trafic (e.g. google, newsletter)",
+    "@linkFormCreatorSourceHelper": {
+      "description": "La source du trafic (e.g. google, newsletter)"
+    },
+    "linkFormCreatorCampaignType": "Type de campagne",
+    "@linkFormCreatorCampaignType": {
+      "description": "Type de campagne"
+    },
+    "linkFormCreatorCampaignTypeHelper": "Type de campagne (e.g. cpc, email, post)",
+    "@linkFormCreatorCampaignTypeHelper": {
+      "description": "Type de campagne (e.g. cpc, email, post)"
+    },
+    "linkFormCreatorCampaignName": "Nom de la campagne",
+    "@linkFormCreatorCampaignName": {
+      "description": "Nom de la campagne"
+    },
+    "linkFormCreatorCampaignNameHelper": "Identifiant de la compagne",
+    "@linkFormCreatorCampaignNameHelper": {
+      "description": "Identifiant de la compagne"
+    },
+    "linkFormCreatorParams": "Paramètres complémentaires",
+    "@linkFormCreatorParams": {
+      "description": "Paramètres complémentaires"
+    },
+    "linkFormCreatorParamsHelper": "Optionnel (e.g. key1=value1&key2=value2)",
+    "@linkFormCreatorParamsHelper": {
+      "description": "Optionnel (e.g. key1=value1&key2=value2)"
+    },
+    "linkFormCreatorCancelButton": "Annuler",
+    "@linkFormCreatorCancelButton": {
+      "description": "Annuler"
+    },
+    "linkFormCreatorCreateButton": "Créer",
+    "@linkFormCreatorCreateButton": {
+      "description": "Créer"
+    },
+    "notificationLinkCopied": "Le lien a été copié",
+    "@notificationLinkCopied": {
+      "description": "Le lien a été copié"
+    },
+    "notificationLinkDeleted": "Le lien et les statistiques ont été supprimés",
+    "@notificationLinkDeleted": {
+      "description": "Le lien a été supprimé"
+    },
+    "notificationCancelLink": "Annuler",
+    "@notificationCancelLink": {
+      "description": "Annuler"
+    }
+}
