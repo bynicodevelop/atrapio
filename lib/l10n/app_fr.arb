@@ -71,29 +71,53 @@
     "@linkFormCreatorLinkHelper": {
       "description": "L'url complete de votre site (e.g. https://www.example.com)"
     },
-    "linkFormCreatorSource": "Source du trafic",
-    "@linkFormCreatorSource": {
+    "linkFormCreatorUtmSource": "Source du trafic",
+    "@linkFormCreatorUtmSource": {
       "description": "Source du trafic"
     },
-    "linkFormCreatorSourceHelper": "La source du trafic (e.g. google, newsletter)",
-    "@linkFormCreatorSourceHelper": {
+    "linkFormCreatorUtmSourceHelper": "La source du trafic (e.g. google, newsletter)",
+    "@linkFormCreatoUtmrSourceHelper": {
       "description": "La source du trafic (e.g. google, newsletter)"
     },
-    "linkFormCreatorCampaignType": "Type de campagne",
-    "@linkFormCreatorCampaignType": {
+    "linkFormCreatorUtmMedium": "Type de campagne",
+    "@linkFormCreatorUtmMedium": {
       "description": "Type de campagne"
     },
-    "linkFormCreatorCampaignTypeHelper": "Type de campagne (e.g. cpc, email, post)",
-    "@linkFormCreatorCampaignTypeHelper": {
+    "linkFormCreatorUtmMediumHelper": "Type de campagne (e.g. cpc, email, post)",
+    "@linkFormCreatorUtmMediumHelper": {
       "description": "Type de campagne (e.g. cpc, email, post)"
     },
-    "linkFormCreatorCampaignName": "Nom de la campagne",
-    "@linkFormCreatorCampaignName": {
+    "linkFormCreatorUtmCampaign": "Nom de la campagne",
+    "@linkFormCreatorUtmCampaign": {
       "description": "Nom de la campagne"
     },
-    "linkFormCreatorCampaignNameHelper": "Identifiant de la compagne",
-    "@linkFormCreatorCampaignNameHelper": {
+    "linkFormCreatorUtmCampaignHelper": "Identifiant de la compagne",
+    "@linkFormCreatorUtmCampaignHelper": {
       "description": "Identifiant de la compagne"
+    },
+    "linkFormCreatorUtmId": "Campagne Id",
+    "@linkFormCreatorUtmId": {
+      "description": "Campagne Id"
+    },
+    "linkFormCreatorUtmIdHelper": "Ex : Ads Id",
+    "@linkFormCreatorUtmIdHelper": {
+      "description": "Ex : Ads Id"
+    },
+    "linkFormCreatorUtmTerm": "Termes de la campagne",
+    "@linkFormCreatorUtmTerm": {
+      "description": "Termes de la campagne"
+    },
+    "linkFormCreatorUtmTermHelper": "Mot clés de la campane (payant)",
+    "@linkFormCreatorUtmTermHelper": {
+      "description": "Mot clés de la campane (payant)"
+    },
+    "linkFormCreatorUtmContent": "Contenu de la campagne",
+    "@linkFormCreatorUtmContent": {
+      "description": "Contenu de la campagne"
+    },
+    "linkFormCreatorUtmContentHelper": "Utilisé pour différencier la campagne (payante)",
+    "@linkFormCreatorUtmContentHelper": {
+      "description": "Utilisé pour différencier la campagne (payante)"
     },
     "linkFormCreatorParams": "Paramètres complémentaires",
     "@linkFormCreatorParams": {

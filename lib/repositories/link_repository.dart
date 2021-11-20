@@ -39,6 +39,29 @@ class LinkRepository {
       throw LinkException(LinkException.linkIdIsRequired);
     }
 
+    List<String> utms = [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_id",
+      "utm_term",
+      "utm_content",
+      "params"
+    ];
+
+    String queries = params.entries
+        .where(
+          (entry) =>
+              utms.contains(entry.key) && entry.value.toString().isNotEmpty,
+        )
+        .map((entry) => "${entry.key}=${entry.value}")
+        .toList()
+        .join("&");
+
+    if (queries.isNotEmpty) {
+      params["src"] = "${params["src"]}?$queries";
+    }
+
     LinkModel linkModel = LinkModel.fromJson(params);
 
     await firestore
