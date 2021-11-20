@@ -4,14 +4,70 @@ import 'package:atrap_io/exceptions/authentication_exception.dart';
 import 'package:atrap_io/helpers/translate.dart';
 import 'package:atrap_io/responsive.dart';
 import 'package:atrap_io/screens/login_screen.dart';
+import 'package:atrap_io/services/auth_form/auth_form_bloc.dart';
 import 'package:atrap_io/services/register/register_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterScreen extends StatelessWidget {
+// ignore: must_be_immutable
+class RegisterScreen extends StatefulWidget {
   static const routeName = '/register';
 
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    emailFocusNode.addListener(() {
+      if (!emailFocusNode.hasFocus) {
+        context.read<AuthFormBloc>().add(
+              EmailChangedEvent(
+                email: emailController.text,
+              ),
+            );
+      }
+    });
+
+    emailController.addListener(() {
+      context.read<AuthFormBloc>().add(
+            EmailChangedEvent(
+              email: emailController.text,
+            ),
+          );
+    });
+
+    passwordFocusNode.addListener(() {
+      if (!passwordFocusNode.hasFocus) {
+        context.read<AuthFormBloc>().add(
+              PasswordChangedEvent(
+                password: passwordController.text,
+              ),
+            );
+      }
+    });
+
+    passwordController.addListener(() {
+      context.read<AuthFormBloc>().add(
+            PasswordChangedEvent(
+              password: passwordController.text,
+            ),
+          );
+    });
+  }
 
   Widget _wrapper({
     required Widget child,
@@ -24,60 +80,75 @@ class RegisterScreen extends StatelessWidget {
         child: child,
       );
 
-  Widget _registerForm(BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            t(context)!.registerTitle,
-            style: Theme.of(context).textTheme.headline5,
+  Widget _registerForm(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            bottom: 70.0,
           ),
-          BlocListener<RegisterBloc, RegisterState>(
-            listener: (context, state) {
-              if (state is RegisterSuccessState) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  BootstrapScreen.routeName,
-                  (route) => false,
-                );
-              }
+          child: Image.asset(
+            "assets/logo_1080_transparent.png",
+            height: 100,
+          ),
+        ),
+        Text(
+          t(context)!.registerTitle,
+          style: Theme.of(context).textTheme.headline5,
+        ),
+        BlocListener<RegisterBloc, RegisterState>(
+          listener: (context, state) {
+            if (state is RegisterSuccessState) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                BootstrapScreen.routeName,
+                (route) => false,
+              );
+            }
 
-              if (state is RegisterFailureState) {
-                if (state.error == AuthenticationException.emailAlreadyExists) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        t(context)!.registerErrorEmailAlreadyExists,
-                      ),
-                    ),
-                  );
-                }
-              }
-            },
-            child: AuthFormComponent.form(
-              buttonLabel: t(context)!.registerButton,
-              onPressed: (data) => context.read<RegisterBloc>().add(
-                    RegisterSubmitEvent(
-                      email: data['email'],
-                      password: data['password'],
+            if (state is RegisterFailureState) {
+              if (state.error == AuthenticationException.emailAlreadyExists) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      t(context)!.registerErrorEmailAlreadyExists,
                     ),
                   ),
-            ),
+                );
+              }
+            }
+          },
+          child: AuthFormComponent.form(
+            buttonLabel: t(context)!.registerButton,
+            emailController: emailController,
+            passwordController: passwordController,
+            emailFocusNode: emailFocusNode,
+            passwordFocusNode: passwordFocusNode,
+            onPressed: (data) => context.read<RegisterBloc>().add(
+                  RegisterSubmitEvent(
+                    email: data['email']!,
+                    password: data['password']!,
+                  ),
+                ),
           ),
-          Column(
-            children: [
-              TextButton(
-                onPressed: () => Navigator.pushNamed(
-                  context,
-                  LoginScreen.routeName,
-                ),
-                child: Text(
-                  t(context)!.gotToLoginLink.toUpperCase(),
-                ),
+        ),
+        Column(
+          children: [
+            TextButton(
+              onPressed: () => Navigator.pushNamed(
+                context,
+                LoginScreen.routeName,
               ),
-            ],
-          )
-        ],
-      );
+              child: Text(
+                t(context)!.gotToLoginLink.toUpperCase(),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

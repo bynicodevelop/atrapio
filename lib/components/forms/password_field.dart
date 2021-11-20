@@ -26,6 +26,7 @@ class PasswordField extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  textInputAction: TextInputAction.done,
                   focusNode: passwordFocusNode,
                   controller: passwordController,
                   obscureText: !context.watch<ToggleButtonBloc>().state.isOn,

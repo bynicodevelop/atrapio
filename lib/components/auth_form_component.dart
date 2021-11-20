@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-class AuthFormComponent extends StatefulWidget {
+class AuthFormComponent extends StatelessWidget {
   final String buttonLabel;
+
   final Function(Map<String, String>) onPressed;
 
   final TextEditingController emailController;
@@ -26,79 +27,33 @@ class AuthFormComponent extends StatefulWidget {
   }) : super(key: key);
 
   static form({
-    required buttonLabel,
-    required onPressed,
+    required String buttonLabel,
+    required TextEditingController emailController,
+    required TextEditingController passwordController,
+    required FocusNode emailFocusNode,
+    required FocusNode passwordFocusNode,
+    required Function(Map<String, String>) onPressed,
   }) =>
       AuthFormComponent(
         buttonLabel: buttonLabel,
         onPressed: onPressed,
-        emailController: TextEditingController(
-          text: "",
-        ),
-        passwordController: TextEditingController(
-          text: "",
-        ),
-        emailFocusNode: FocusNode(),
-        passwordFocusNode: FocusNode(),
+        emailController: emailController,
+        passwordController: passwordController,
+        emailFocusNode: emailFocusNode,
+        passwordFocusNode: passwordFocusNode,
       );
-
-  @override
-  State<AuthFormComponent> createState() => _AuthFormComponentState();
-}
-
-class _AuthFormComponentState extends State<AuthFormComponent> {
-  @override
-  void initState() {
-    super.initState();
-
-    widget.emailFocusNode.addListener(() {
-      if (!widget.emailFocusNode.hasFocus) {
-        context.read<AuthFormBloc>().add(
-              EmailChangedEvent(
-                email: widget.emailController.text,
-              ),
-            );
-      }
-    });
-
-    widget.emailController.addListener(() {
-      context.read<AuthFormBloc>().add(
-            EmailChangedEvent(
-              email: widget.emailController.text,
-            ),
-          );
-    });
-
-    widget.passwordFocusNode.addListener(() {
-      if (!widget.passwordFocusNode.hasFocus) {
-        context.read<AuthFormBloc>().add(
-              PasswordChangedEvent(
-                password: widget.passwordController.text,
-              ),
-            );
-      }
-    });
-
-    widget.passwordController.addListener(() {
-      context.read<AuthFormBloc>().add(
-            PasswordChangedEvent(
-              password: widget.passwordController.text,
-            ),
-          );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         EmailField(
-          emailController: widget.emailController,
-          emailFocusNode: widget.emailFocusNode,
+          emailController: emailController,
+          emailFocusNode: emailFocusNode,
         ),
         PasswordField(
-          passwordController: widget.passwordController,
-          passwordFocusNode: widget.passwordFocusNode,
+          passwordController: passwordController,
+          passwordFocusNode: passwordFocusNode,
         ),
         BlocBuilder<AuthFormBloc, AuthFormState>(
           builder: (context, state) {
@@ -111,13 +66,13 @@ class _AuthFormComponentState extends State<AuthFormComponent> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: state.status.isValidated
-                          ? () => widget.onPressed({
-                                "email": widget.emailController.text,
-                                "password": widget.passwordController.text,
+                          ? () => onPressed({
+                                "email": emailController.text,
+                                "password": passwordController.text,
                               })
                           : null,
                       child: Text(
-                        widget.buttonLabel.toUpperCase(),
+                        buttonLabel.toUpperCase(),
                       ),
                     ),
                   ),
