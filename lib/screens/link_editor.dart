@@ -53,6 +53,7 @@ class _LinkEditorState extends State<LinkEditor> {
                     horizontal: 8.0,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.next,
                     controller: _srcController,
                     keyboardType: TextInputType.url,
                     decoration: InputDecoration(
@@ -66,6 +67,7 @@ class _LinkEditorState extends State<LinkEditor> {
                     horizontal: 8.0,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.next,
                     controller: _utmSourceController,
                     decoration: InputDecoration(
                       labelText: t(context)!.linkFormCreatorUtmSource,
@@ -78,6 +80,7 @@ class _LinkEditorState extends State<LinkEditor> {
                     horizontal: 8.0,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.next,
                     controller: _utmMediumController,
                     decoration: InputDecoration(
                       labelText: t(context)!.linkFormCreatorUtmMedium,
@@ -90,6 +93,7 @@ class _LinkEditorState extends State<LinkEditor> {
                     horizontal: 8.0,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.next,
                     controller: _utmCampaignController,
                     decoration: InputDecoration(
                       labelText: t(context)!.linkFormCreatorUtmCampaign,
@@ -102,6 +106,7 @@ class _LinkEditorState extends State<LinkEditor> {
                     horizontal: 8.0,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.next,
                     controller: _utmIdController,
                     decoration: InputDecoration(
                       labelText: t(context)!.linkFormCreatorUtmId,
@@ -114,6 +119,7 @@ class _LinkEditorState extends State<LinkEditor> {
                     horizontal: 8.0,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.next,
                     controller: _utmTermController,
                     decoration: InputDecoration(
                       labelText: t(context)!.linkFormCreatorUtmTerm,
@@ -126,6 +132,7 @@ class _LinkEditorState extends State<LinkEditor> {
                     horizontal: 8.0,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.next,
                     controller: _utmContentController,
                     decoration: InputDecoration(
                       labelText: t(context)!.linkFormCreatorUtmContent,
@@ -138,6 +145,7 @@ class _LinkEditorState extends State<LinkEditor> {
                     horizontal: 8.0,
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.done,
                     controller: _paramsController,
                     decoration: InputDecoration(
                       labelText: t(context)!.linkFormCreatorParams,
