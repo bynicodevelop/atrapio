@@ -135,6 +135,10 @@
     "@linkFormCreatorCreateButton": {
       "description": "Créer"
     },
+    "linkFormCreatorErrorMessageEmptySrc": "Vous devez saisir une URL",
+    "@linkFormCreatorErrorMessageEmptySrc": {
+      "description": "Vous devez saisir une URL"
+    },
     "notificationLinkCopied": "Le lien a été copié",
     "@notificationLinkCopied": {
       "description": "Le lien a été copié"

@@ -2,6 +2,7 @@ import 'package:atrap_io/helpers/translate.dart';
 import 'package:atrap_io/services/add_link/add_link_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LinkEditor extends StatefulWidget {
   const LinkEditor({Key? key}) : super(key: key);
@@ -171,27 +172,50 @@ class _LinkEditorState extends State<LinkEditor> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {
-                          context.read<AddLinkBloc>().add(
-                                OnCreateLinkEvent(
-                                  params: {
-                                    "src": _srcController.text,
-                                    "utm_source": _utmSourceController.text,
-                                    "utm_medium": _utmMediumController.text,
-                                    "utm_campaign": _utmCampaignController.text,
-                                    "utm_id": _utmIdController.text,
-                                    "utm_term": _utmTermController.text,
-                                    "utm_content": _utmContentController.text,
-                                    "params": _paramsController.text,
-                                  },
-                                ),
-                              );
-                        },
+                        onPressed: context.watch<AddLinkBloc>().state
+                                is AddLinkLoading
+                            ? null
+                            : () {
+                                if (_srcController.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        t(context)!
+                                            .linkFormCreatorErrorMessageEmptySrc,
+                                      ),
+                                    ),
+                                  );
+
+                                  return;
+                                }
+
+                                context.read<AddLinkBloc>().add(
+                                      OnCreateLinkEvent(
+                                        params: {
+                                          "src": _srcController.text,
+                                          "utm_source":
+                                              _utmSourceController.text,
+                                          "utm_medium":
+                                              _utmMediumController.text,
+                                          "utm_campaign":
+                                              _utmCampaignController.text,
+                                          "utm_id": _utmIdController.text,
+                                          "utm_term": _utmTermController.text,
+                                          "utm_content":
+                                              _utmContentController.text,
+                                          "params": _paramsController.text,
+                                        },
+                                      ),
+                                    );
+                              },
                         child: Text(
                           t(context)!.linkFormCreatorCreateButton.toUpperCase(),
                           style:
                               Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: Theme.of(context).primaryColor,
+                                    color: context.watch<AddLinkBloc>().state
+                                            is AddLinkLoading
+                                        ? Colors.grey
+                                        : Theme.of(context).primaryColor,
                                   ),
                         ),
                       ),
