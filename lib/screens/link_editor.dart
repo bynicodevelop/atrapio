@@ -43,6 +43,16 @@ class _LinkEditorState extends State<LinkEditor> {
 
               Navigator.pop(context);
             }
+
+            if (state is AddLinkFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    t(context)!.linkFormCreatorUnexpectedErrorMessage,
+                  ),
+                ),
+              );
+            }
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),

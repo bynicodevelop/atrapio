@@ -139,6 +139,10 @@
     "@linkFormCreatorErrorMessageEmptySrc": {
       "description": "Vous devez saisir une URL"
     },
+    "linkFormCreatorUnexpectedErrorMessage": "Une erreur est survenue. Mais ne vous en faite pas, nous avons été informé.",
+    "@linkFormCreatorUnexpectedErrorMessage": {
+      "description": "Une erreur est survenue. Mais ne vous en faite pas, nous avons été informé."
+    },
     "notificationLinkCopied": "Le lien a été copié",
     "@notificationLinkCopied": {
       "description": "Le lien a été copié"

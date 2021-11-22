@@ -32,6 +32,7 @@ class AddLinkBloc extends Bloc<AddLinkEvent, AddLinkState> {
 
         emit(AddLinkSuccess());
       } catch (e) {
+        // TODO: Add crash analytics
         emit(AddLinkFailure(
           error: e.toString(),
         ));

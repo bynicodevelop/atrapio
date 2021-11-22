@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class LinkModel extends Equatable {
@@ -11,6 +12,7 @@ class LinkModel extends Equatable {
   final String utmContent;
   final String linkId;
   final String params;
+  final DateTime? createdAt;
 
   const LinkModel({
     required this.uid,
@@ -23,11 +25,13 @@ class LinkModel extends Equatable {
     this.utmContent = "",
     this.linkId = "",
     this.params = "",
+    this.createdAt,
   });
 
   Map<String, dynamic> toJson() => {
         "uid": uid,
         "src": src,
+        "created_at": createdAt,
         "utm_source": utmSource,
         "utm_medium": utmMedium,
         "utm_campaign": utmCampaign,
@@ -41,6 +45,11 @@ class LinkModel extends Equatable {
   LinkModel.fromJson(Map<String, dynamic> json)
       : uid = json['uid'] ?? "",
         src = json['src'] ?? "",
+        createdAt = json['created_at'] == null
+            ? null
+            : DateTime.fromMicrosecondsSinceEpoch(
+                (json['created_at'] as Timestamp).microsecondsSinceEpoch,
+              ),
         utmSource = json['utm_source'] ?? "",
         utmMedium = json['utm_medium'] ?? "",
         utmCampaign = json['utm_campaign'] ?? "",
@@ -54,6 +63,7 @@ class LinkModel extends Equatable {
   List<Object?> get props => [
         uid,
         src,
+        createdAt,
         utmSource,
         utmMedium,
         utmCampaign,

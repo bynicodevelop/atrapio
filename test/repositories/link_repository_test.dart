@@ -21,6 +21,7 @@ void main() {
 
     test("Should create new link with success", () async {
       // ARRANGE
+      DateTime now = DateTime.now();
       DocumentReferenceMock userDocumentReference = DocumentReferenceMock();
 
       CollectionReferenceMock linkCollectionReference =
@@ -41,7 +42,7 @@ void main() {
 
       DocumentReferenceMock linkDocumentReference = DocumentReferenceMock();
 
-      LinkModel linkModel = LinkModel.fromJson(const {
+      LinkModel linkModel = LinkModel.fromJson({
         "src": "https://www.example.com",
         "linkId": "link-id",
         "userId": "user-id",
@@ -52,6 +53,7 @@ void main() {
         "utm_term": "",
         "utm_content": "",
         "params": "",
+        "created_at": now,
       });
 
       when(linkDocumentReference.set(linkModel.toJson()))
@@ -79,6 +81,7 @@ void main() {
           "utm_term": "",
           "utm_content": "",
           "params": "",
+          "created_at": now,
         }),
         returnsNormally,
       );
@@ -88,6 +91,8 @@ void main() {
 
     test("Should create new link with queries", () async {
       // ARRANGE
+      DateTime now = DateTime.now();
+
       DocumentReferenceMock userDocumentReference = DocumentReferenceMock();
 
       CollectionReferenceMock linkCollectionReference =
@@ -108,7 +113,7 @@ void main() {
 
       DocumentReferenceMock linkDocumentReference = DocumentReferenceMock();
 
-      LinkModel linkModel = LinkModel.fromJson(const {
+      LinkModel linkModel = LinkModel.fromJson({
         "src":
             "https://www.example.com?utm_source=instagram&utm_medium=stories&utm_campaign=test",
         "linkId": "link-id",
@@ -120,6 +125,7 @@ void main() {
         "utm_term": "",
         "utm_content": "",
         "params": "",
+        "created_at": now,
       });
 
       when(linkDocumentReference.set(linkModel.toJson()))
@@ -147,6 +153,7 @@ void main() {
           "utm_term": "",
           "utm_content": "",
           "params": "",
+          "created_at": now,
         }),
         returnsNormally,
       );
@@ -387,6 +394,8 @@ void main() {
 
     test("Should delete link with success", () async {
       // ARRANGE
+      DateTime now = DateTime.now();
+
       DocumentReferenceMock documentReferenceMock = DocumentReferenceMock();
 
       when(documentReferenceMock.delete()).thenAnswer(
@@ -409,10 +418,11 @@ void main() {
 
       // ACT
       await linkRepository.deleteLink(
-        const LinkModel(
-          uid: "link-id",
-          src: "src",
-        ),
+        LinkModel.fromJson({
+          "uid": "link-id",
+          "src": "src",
+          "created_at": now,
+        }),
       );
 
       // ASSERT

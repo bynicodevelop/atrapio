@@ -17,13 +17,19 @@ class LinkRepository {
       .collection("users")
       .doc(userId)
       .collection("links")
+      .orderBy(
+        "created_at",
+        descending: true,
+      )
       .snapshots()
       .map(
         (snapshot) => snapshot.docs
-            .map((doc) => LinkModel.fromJson({
-                  ...doc.data(),
-                  ...{"uid": doc.id}
-                }))
+            .map(
+              (doc) => LinkModel.fromJson({
+                ...doc.data(),
+                ...{"uid": doc.id}
+              }),
+            )
             .toList(),
       );
 
