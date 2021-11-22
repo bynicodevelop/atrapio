@@ -28,210 +28,222 @@ class _LinkEditorState extends State<LinkEditor> {
           t(context)!.linkFormCreatorTitle,
         ),
       ),
-      body: SingleChildScrollView(
-        child: BlocListener<AddLinkBloc, AddLinkState>(
-          listener: (context, state) {
-            if (state is AddLinkSuccess) {
-              _srcController.clear();
-              _utmSourceController.clear();
-              _utmMediumController.clear();
-              _utmCampaignController.clear();
-              _utmIdController.clear();
-              _utmTermController.clear();
-              _utmContentController.clear();
-              _paramsController.clear();
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SingleChildScrollView(
+          child: BlocListener<AddLinkBloc, AddLinkState>(
+            listener: (context, state) {
+              if (state is AddLinkSuccess) {
+                FocusScope.of(context).requestFocus(FocusNode());
 
-              Navigator.pop(context);
-            }
+                _srcController.clear();
+                _utmSourceController.clear();
+                _utmMediumController.clear();
+                _utmCampaignController.clear();
+                _utmIdController.clear();
+                _utmTermController.clear();
+                _utmContentController.clear();
+                _paramsController.clear();
 
-            if (state is AddLinkFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    t(context)!.linkFormCreatorUnexpectedErrorMessage,
-                  ),
-                ),
-              );
-            }
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Wrap(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: TextField(
-                    textInputAction: TextInputAction.next,
-                    controller: _srcController,
-                    keyboardType: TextInputType.url,
-                    decoration: InputDecoration(
-                      labelText: t(context)!.linkFormCreatorLink,
-                      helperText: t(context)!.linkFormCreatorLinkHelper,
+                Navigator.pop(context);
+              }
+
+              if (state is AddLinkFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      t(context)!.linkFormCreatorUnexpectedErrorMessage,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: TextField(
-                    textInputAction: TextInputAction.next,
-                    controller: _utmSourceController,
-                    decoration: InputDecoration(
-                      labelText: t(context)!.linkFormCreatorUtmSource,
-                      helperText: t(context)!.linkFormCreatorUtmSourceHelper,
+                );
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Wrap(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: TextField(
-                    textInputAction: TextInputAction.next,
-                    controller: _utmMediumController,
-                    decoration: InputDecoration(
-                      labelText: t(context)!.linkFormCreatorUtmMedium,
-                      helperText: t(context)!.linkFormCreatorUtmMediumHelper,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: TextField(
-                    textInputAction: TextInputAction.next,
-                    controller: _utmCampaignController,
-                    decoration: InputDecoration(
-                      labelText: t(context)!.linkFormCreatorUtmCampaign,
-                      helperText: t(context)!.linkFormCreatorUtmCampaignHelper,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: TextField(
-                    textInputAction: TextInputAction.next,
-                    controller: _utmIdController,
-                    decoration: InputDecoration(
-                      labelText: t(context)!.linkFormCreatorUtmId,
-                      helperText: t(context)!.linkFormCreatorUtmIdHelper,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: TextField(
-                    textInputAction: TextInputAction.next,
-                    controller: _utmTermController,
-                    decoration: InputDecoration(
-                      labelText: t(context)!.linkFormCreatorUtmTerm,
-                      helperText: t(context)!.linkFormCreatorUtmTermHelper,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: TextField(
-                    textInputAction: TextInputAction.next,
-                    controller: _utmContentController,
-                    decoration: InputDecoration(
-                      labelText: t(context)!.linkFormCreatorUtmContent,
-                      helperText: t(context)!.linkFormCreatorUtmContentHelper,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                  ),
-                  child: TextField(
-                    textInputAction: TextInputAction.done,
-                    controller: _paramsController,
-                    decoration: InputDecoration(
-                      labelText: t(context)!.linkFormCreatorParams,
-                      helperText: t(context)!.linkFormCreatorParamsHelper,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 20.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text(
-                          t(context)!.linkFormCreatorCancelButton.toUpperCase(),
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: Colors.grey,
-                                  ),
-                        ),
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      controller: _srcController,
+                      keyboardType: TextInputType.url,
+                      decoration: InputDecoration(
+                        labelText: t(context)!.linkFormCreatorLink,
+                        helperText: t(context)!.linkFormCreatorLinkHelper,
                       ),
-                      TextButton(
-                        onPressed: context.watch<AddLinkBloc>().state
-                                is AddLinkLoading
-                            ? null
-                            : () {
-                                if (_srcController.text.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        t(context)!
-                                            .linkFormCreatorErrorMessageEmptySrc,
-                                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      controller: _utmSourceController,
+                      decoration: InputDecoration(
+                        labelText: t(context)!.linkFormCreatorUtmSource,
+                        helperText: t(context)!.linkFormCreatorUtmSourceHelper,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      controller: _utmMediumController,
+                      decoration: InputDecoration(
+                        labelText: t(context)!.linkFormCreatorUtmMedium,
+                        helperText: t(context)!.linkFormCreatorUtmMediumHelper,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      controller: _utmCampaignController,
+                      decoration: InputDecoration(
+                        labelText: t(context)!.linkFormCreatorUtmCampaign,
+                        helperText:
+                            t(context)!.linkFormCreatorUtmCampaignHelper,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      controller: _utmIdController,
+                      decoration: InputDecoration(
+                        labelText: t(context)!.linkFormCreatorUtmId,
+                        helperText: t(context)!.linkFormCreatorUtmIdHelper,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      controller: _utmTermController,
+                      decoration: InputDecoration(
+                        labelText: t(context)!.linkFormCreatorUtmTerm,
+                        helperText: t(context)!.linkFormCreatorUtmTermHelper,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: TextField(
+                      textInputAction: TextInputAction.next,
+                      controller: _utmContentController,
+                      decoration: InputDecoration(
+                        labelText: t(context)!.linkFormCreatorUtmContent,
+                        helperText: t(context)!.linkFormCreatorUtmContentHelper,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: TextField(
+                      textInputAction: TextInputAction.done,
+                      controller: _paramsController,
+                      decoration: InputDecoration(
+                        labelText: t(context)!.linkFormCreatorParams,
+                        helperText: t(context)!.linkFormCreatorParamsHelper,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 20.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            t(context)!
+                                .linkFormCreatorCancelButton
+                                .toUpperCase(),
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: Colors.grey,
                                     ),
-                                  );
-
-                                  return;
-                                }
-
-                                context.read<AddLinkBloc>().add(
-                                      OnCreateLinkEvent(
-                                        params: {
-                                          "src": _srcController.text,
-                                          "utm_source":
-                                              _utmSourceController.text,
-                                          "utm_medium":
-                                              _utmMediumController.text,
-                                          "utm_campaign":
-                                              _utmCampaignController.text,
-                                          "utm_id": _utmIdController.text,
-                                          "utm_term": _utmTermController.text,
-                                          "utm_content":
-                                              _utmContentController.text,
-                                          "params": _paramsController.text,
-                                        },
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: context.watch<AddLinkBloc>().state
+                                  is AddLinkLoading
+                              ? null
+                              : () {
+                                  if (_srcController.text.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          t(context)!
+                                              .linkFormCreatorErrorMessageEmptySrc,
+                                        ),
                                       ),
                                     );
-                              },
-                        child: Text(
-                          t(context)!.linkFormCreatorCreateButton.toUpperCase(),
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: context.watch<AddLinkBloc>().state
-                                            is AddLinkLoading
-                                        ? Colors.grey
-                                        : Theme.of(context).primaryColor,
-                                  ),
+
+                                    return;
+                                  }
+
+                                  context.read<AddLinkBloc>().add(
+                                        OnCreateLinkEvent(
+                                          params: {
+                                            "src": _srcController.text,
+                                            "utm_source":
+                                                _utmSourceController.text,
+                                            "utm_medium":
+                                                _utmMediumController.text,
+                                            "utm_campaign":
+                                                _utmCampaignController.text,
+                                            "utm_id": _utmIdController.text,
+                                            "utm_term": _utmTermController.text,
+                                            "utm_content":
+                                                _utmContentController.text,
+                                            "params": _paramsController.text,
+                                          },
+                                        ),
+                                      );
+                                },
+                          child: Text(
+                            t(context)!
+                                .linkFormCreatorCreateButton
+                                .toUpperCase(),
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: context.watch<AddLinkBloc>().state
+                                              is AddLinkLoading
+                                          ? Colors.grey
+                                          : Theme.of(context).primaryColor,
+                                    ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
