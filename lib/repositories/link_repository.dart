@@ -1,4 +1,5 @@
 import 'package:atrap_io/exceptions/link_exception.dart';
+import 'package:atrap_io/helpers/link_helper.dart';
 import 'package:atrap_io/models/link_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -31,7 +32,7 @@ class LinkRepository {
       throw LinkException(LinkException.userIdRequired);
     }
 
-    if (params["url"].toString().isEmpty) {
+    if (params["src"].toString().isEmpty) {
       throw LinkException(LinkException.urlIsRequired);
     }
 
@@ -39,27 +40,12 @@ class LinkRepository {
       throw LinkException(LinkException.linkIdIsRequired);
     }
 
-    List<String> utms = [
-      "utm_source",
-      "utm_medium",
-      "utm_campaign",
-      "utm_id",
-      "utm_term",
-      "utm_content",
-      "params"
-    ];
+    final LinkHelper linkHelper = LinkHelper();
 
-    String queries = params.entries
-        .where(
-          (entry) =>
-              utms.contains(entry.key) && entry.value.toString().isNotEmpty,
-        )
-        .map((entry) => "${entry.key}=${entry.value}")
-        .toList()
-        .join("&");
+    String link = linkHelper.linkFactory(params);
 
-    if (queries.isNotEmpty) {
-      params["src"] = "${params["src"]}?$queries";
+    if (link.isNotEmpty) {
+      params["src"] = link;
     }
 
     LinkModel linkModel = LinkModel.fromJson(params);
