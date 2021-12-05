@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:atrap_io/bootstrap_screen.dart';
 import 'package:atrap_io/repositories/authentication_repository.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
+import 'package:atrap_io/screens/link_details_screen.dart';
 import 'package:atrap_io/screens/login_screen.dart';
 import 'package:atrap_io/screens/register_screen.dart';
 import 'package:atrap_io/screens/settings_screen.dart';
@@ -10,6 +11,7 @@ import 'package:atrap_io/services/add_link/add_link_bloc.dart';
 import 'package:atrap_io/services/app/app_bloc.dart';
 import 'package:atrap_io/services/auth_form/auth_form_bloc.dart';
 import 'package:atrap_io/services/delete_link/delete_link_bloc.dart';
+import 'package:atrap_io/services/get_link/get_link_bloc.dart';
 import 'package:atrap_io/services/list_links/list_links_bloc.dart';
 import 'package:atrap_io/services/login/login_bloc.dart';
 import 'package:atrap_io/services/logout/logout_bloc.dart';
@@ -17,6 +19,7 @@ import 'package:atrap_io/services/register/register_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +32,7 @@ final Map<String, Widget> routes = {
   LoginScreen.routeName: const LoginScreen(),
   RegisterScreen.routeName: const RegisterScreen(),
   SettingsScreen.routeName: const SettingsScreen(),
+  LinkDetailsScreen.routeName: const LinkDetailsScreen(),
 };
 
 Future<void> main() async {
@@ -56,6 +60,10 @@ Future<void> main() async {
       await FirebaseFirestore.instance.terminate();
       await FirebaseFirestore.instance.clearPersistence();
     }
+  }
+
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
   }
 
   runApp(const App());
@@ -118,7 +126,13 @@ class App extends StatelessWidget {
           create: (context) => DeleteLinkBloc(
             linkRepository,
           ),
-        )
+        ),
+        BlocProvider(
+          create: (context) => GetLinkBloc(
+            linkRepository,
+            authenticationRepository,
+          ),
+        ),
       ],
       child: const AppView(),
     );
@@ -144,10 +158,23 @@ class AppView extends StatelessWidget {
       ],
       initialRoute: BootstrapScreen.routeName,
       onGenerateRoute: (settings) {
+        String routeName = settings.name!;
+
+        if (settings.name!.contains(LinkDetailsScreen.routeName)) {
+          routeName = LinkDetailsScreen.routeName;
+
+          settings = RouteSettings(
+            arguments: {
+              "data": settings.name!.split("/").last,
+            },
+            name: routeName,
+          );
+        }
+
         return PageRouteBuilder(
           settings: settings,
           pageBuilder: (context, animation, secondaryAnimation) =>
-              routes[settings.name]!,
+              routes[routeName]!,
         );
       },
     );

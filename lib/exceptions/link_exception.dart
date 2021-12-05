@@ -6,5 +6,5 @@ class LinkException implements Exception {
 
   final String message;
 
-  LinkException(this.message);
+  const LinkException(this.message);
 }

@@ -1,12 +1,13 @@
 import 'package:atrap_io/config/constants.dart';
+import 'package:atrap_io/helpers/clipboard_helper.dart';
 import 'package:atrap_io/helpers/translate.dart';
+import 'package:atrap_io/screens/link_details_screen.dart';
 import 'package:atrap_io/services/delete_link/delete_link_bloc.dart';
 import 'package:atrap_io/services/list_links/list_links_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LinkView extends StatelessWidget {
   const LinkView({Key? key}) : super(key: key);
@@ -80,6 +81,10 @@ class LinkView extends StatelessWidget {
               ),
               child: Card(
                 child: ListTile(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    "${LinkDetailsScreen.routeName}/${state.links[index].uid}",
+                  ),
                   title: Text("$kDomain/l/${state.links[index].linkId}"),
                   subtitle: Text(
                     state.links[index].src,
@@ -90,19 +95,10 @@ class LinkView extends StatelessWidget {
                       FontAwesomeIcons.copy,
                       size: 18,
                     ),
-                    onPressed: () async {
-                      await Clipboard.setData(
-                        ClipboardData(
-                          text: "$kDomain/l/${state.links[index].linkId}",
-                        ),
-                      );
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(t(context)!.notificationLinkCopied),
-                        ),
-                      );
-                    },
+                    onPressed: () async => await ClipBoardHelper.copy(
+                      context,
+                      state.links[index].linkId,
+                    ),
                   ),
                 ),
               ),
