@@ -14,6 +14,7 @@ import 'package:atrap_io/services/list_links/list_links_bloc.dart';
 import 'package:atrap_io/services/login/login_bloc.dart';
 import 'package:atrap_io/services/logout/logout_bloc.dart';
 import 'package:atrap_io/services/register/register_bloc.dart';
+import 'package:atrap_io/services/update_link/update_link_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -117,6 +118,12 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) => DeleteLinkBloc(
             linkRepository,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => UpdateLinkBloc(
+            linkRepository: linkRepository,
+            authenticationRepository: authenticationRepository,
           ),
         )
       ],

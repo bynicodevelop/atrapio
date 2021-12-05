@@ -75,6 +75,25 @@ class LinkRepository {
     return httpsCallableResult.data["linkId"] ?? "";
   }
 
+  Future<void> updateLink(Map<String, dynamic> params) async {
+    if (params["userId"].toString().isEmpty) {
+      throw LinkException(LinkException.userIdRequired);
+    }
+
+    params["created_at"] = Timestamp.fromDate(params["created_at"]);
+
+    LinkModel linkModel = LinkModel.fromJson(params);
+
+    await firestore
+        .collection("users")
+        .doc(params["userId"])
+        .collection("links")
+        .doc(params["linkId"])
+        .update(
+          linkModel.toJson(),
+        );
+  }
+
   Future<void> deleteLink(
     LinkModel linkModel,
   ) async =>

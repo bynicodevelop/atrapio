@@ -1,3 +1,4 @@
+import 'package:atrap_io/helpers/web_scraper_helper.dart';
 import 'package:atrap_io/repositories/authentication_repository.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -18,14 +19,22 @@ class AddLinkBloc extends Bloc<AddLinkEvent, AddLinkState> {
       emit(AddLinkLoading());
 
       try {
+        WebScrapperHelper webScrapperHelper = WebScrapperHelper(
+          src: event.params["src"],
+        );
+
+        Map<String, String> metadata = await webScrapperHelper.extractMeta();
+
         String linkId = await linkRepository.getTemporaryLink();
 
         await linkRepository.createLink(
           {
             ...event.params,
             ...{
+              "name": metadata["title"],
               "userId": authenticationRepository.userId,
               "linkId": linkId,
+              "metadata": metadata,
             },
           },
         );
