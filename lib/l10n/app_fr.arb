@@ -154,5 +154,21 @@
     "notificationCancelLink": "Annuler",
     "@notificationCancelLink": {
       "description": "Annuler"
+    },
+    "updadeLinkTitle": "Mise à jour du lien",
+    "@updadeLinkTitle": {
+      "description": "Mise à jour du lien"
+    },
+    "updadeLinkNameField": "Nom du lien",
+    "@updadeLinkNameField": {
+      "description": "Nom du lien"
+    },
+    "updadeLinkCancelButton": "Annuler",
+    "@updadeLinkCancelButton": {
+      "description": "Annuler"
+    },
+    "updadeLinkUpdateButton": "Mettre à jour",
+    "@updadeLinkUpdateButton": {
+      "description": "Mettre à jour"
     }
 }

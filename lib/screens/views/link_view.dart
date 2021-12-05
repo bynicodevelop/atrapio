@@ -1,5 +1,7 @@
+import 'package:atrap_io/components/update_link_form_component.dart';
 import 'package:atrap_io/config/constants.dart';
 import 'package:atrap_io/helpers/translate.dart';
+import 'package:atrap_io/models/link_model.dart';
 import 'package:atrap_io/services/delete_link/delete_link_bloc.dart';
 import 'package:atrap_io/services/list_links/list_links_bloc.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +10,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class LinkView extends StatelessWidget {
+class LinkView extends StatefulWidget {
   const LinkView({Key? key}) : super(key: key);
+
+  @override
+  State<LinkView> createState() => _LinkViewState();
+}
+
+class _LinkViewState extends State<LinkView> {
+  void _modal(
+    BuildContext context,
+    LinkModel linkModel,
+  ) =>
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => UpdateLinkFormComponent(
+          linkModel: linkModel,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +98,10 @@ class LinkView extends StatelessWidget {
               ),
               child: Card(
                 child: ListTile(
+                  onLongPress: () => _modal(
+                    context,
+                    state.links[index],
+                  ),
                   title: Text(
                     state.links[index].name.isNotEmpty
                         ? state.links[index].name
