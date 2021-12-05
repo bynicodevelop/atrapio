@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class LinkModel extends Equatable {
   final String uid;
+  final String name;
   final String src;
   final String utmSource;
   final String utmMedium;
@@ -12,11 +13,13 @@ class LinkModel extends Equatable {
   final String utmContent;
   final String linkId;
   final String params;
+  final Map<String, dynamic> metadata;
   final DateTime? createdAt;
 
   const LinkModel({
     required this.uid,
     required this.src,
+    this.name = "",
     this.utmSource = "",
     this.utmMedium = "",
     this.utmCampaign = "",
@@ -25,12 +28,14 @@ class LinkModel extends Equatable {
     this.utmContent = "",
     this.linkId = "",
     this.params = "",
+    this.metadata = const {},
     this.createdAt,
   });
 
   Map<String, dynamic> toJson() => {
         "uid": uid,
         "src": src,
+        "name": name,
         "created_at": createdAt,
         "utm_source": utmSource,
         "utm_medium": utmMedium,
@@ -39,12 +44,14 @@ class LinkModel extends Equatable {
         "utm_term": utmTerm,
         "utm_content": utmContent,
         "linkId": linkId,
+        "metadata": metadata,
         "params": params,
       };
 
   LinkModel.fromJson(Map<String, dynamic> json)
       : uid = json['uid'] ?? "",
         src = json['src'] ?? "",
+        name = json['name'] ?? "",
         createdAt = json['created_at'] == null
             ? null
             : DateTime.fromMicrosecondsSinceEpoch(
@@ -57,12 +64,14 @@ class LinkModel extends Equatable {
         utmTerm = json['utm_term'] ?? "",
         utmContent = json['utm_content'] ?? "",
         linkId = json['linkId'] ?? "",
-        params = json['params'] ?? "";
+        params = json['params'] ?? "",
+        metadata = json['metadata'] ?? {};
 
   @override
   List<Object?> get props => [
         uid,
         src,
+        name,
         createdAt,
         utmSource,
         utmMedium,
@@ -72,5 +81,6 @@ class LinkModel extends Equatable {
         utmContent,
         linkId,
         params,
+        metadata,
       ];
 }

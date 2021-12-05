@@ -80,7 +80,11 @@ class LinkView extends StatelessWidget {
               ),
               child: Card(
                 child: ListTile(
-                  title: Text("$kDomain/l/${state.links[index].linkId}"),
+                  title: Text(
+                    state.links[index].name.isNotEmpty
+                        ? state.links[index].name
+                        : "$kDomain/l/${state.links[index].linkId}",
+                  ),
                   subtitle: Text(
                     state.links[index].src,
                     overflow: TextOverflow.ellipsis,
