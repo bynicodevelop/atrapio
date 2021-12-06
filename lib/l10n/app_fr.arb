@@ -147,7 +147,7 @@
     "@notificationLinkCopied": {
       "description": "Le lien a été copié"
     },
-    "notificationLinkDeleted": "Le lien et les statistiques ont été supprimés",
+    "notificationLinkDeleted": "Patientez... Le lien et les statistiques sont en cours de suppression.",
     "@notificationLinkDeleted": {
       "description": "Le lien a été supprimé"
     },
