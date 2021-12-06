@@ -47,9 +47,11 @@ class _UpdateLinkFormComponentState extends State<UpdateLinkFormComponent> {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 8.8,
-          horizontal: 10.0,
+        padding: EdgeInsets.only(
+          top: 8.8,
+          left: 10.0,
+          right: 10.0,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: Wrap(
           children: [
