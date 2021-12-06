@@ -27,7 +27,10 @@ class LinkRepository {
             .map(
               (doc) => LinkModel.fromJson({
                 ...doc.data(),
-                ...{"uid": doc.id}
+                ...{
+                  "name": doc.get("metadata.name") ?? "",
+                  "uid": doc.id,
+                }
               }),
             )
             .toList(),

@@ -30,6 +30,8 @@ class WebScrapperHelper {
         "description": description.isNotEmpty ? description.first : "",
         "image": images.isNotEmpty ? images.first : "",
       });
+    }).catchError((onError) {
+      return completer.completeError(onError);
     });
 
     return completer.future;
