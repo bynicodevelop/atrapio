@@ -10,6 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../../services/list_links/list_links_bloc.dart';
+import '../../services/list_links/list_links_bloc.dart';
+
 class LinkView extends StatefulWidget {
   const LinkView({Key? key}) : super(key: key);
 
@@ -32,6 +35,7 @@ class _LinkViewState extends State<LinkView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ListLinksBloc, ListLinksState>(
+      bloc: context.read<ListLinksBloc>()..add(OnLoadListLinksEvent()),
       builder: (BuildContext context, state) {
         if (state is ListLinksInitialState) {
           if (state.links.isEmpty) {
