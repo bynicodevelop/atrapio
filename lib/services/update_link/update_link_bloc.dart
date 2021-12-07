@@ -1,4 +1,3 @@
-import 'package:atrap_io/models/link_model.dart';
 import 'package:atrap_io/repositories/authentication_repository.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
 import 'package:bloc/bloc.dart';

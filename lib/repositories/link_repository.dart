@@ -28,7 +28,9 @@ class LinkRepository {
               (doc) => LinkModel.fromJson({
                 ...doc.data(),
                 ...{
-                  "name": doc.get("metadata.name") ?? "",
+                  "name": doc.data()["metadata"] == null
+                      ? ""
+                      : doc.get("metadata")["name"],
                   "uid": doc.id,
                 }
               }),
