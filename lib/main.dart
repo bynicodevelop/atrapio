@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:atrap_io/bootstrap_screen.dart';
 import 'package:atrap_io/repositories/authentication_repository.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
+import 'package:atrap_io/screens/get_tracker_screen.dart';
 import 'package:atrap_io/screens/login_screen.dart';
 import 'package:atrap_io/screens/register_screen.dart';
 import 'package:atrap_io/screens/settings_screen.dart';
@@ -30,6 +31,7 @@ final Map<String, Widget> routes = {
   LoginScreen.routeName: const LoginScreen(),
   RegisterScreen.routeName: const RegisterScreen(),
   SettingsScreen.routeName: const SettingsScreen(),
+  GetTrackerScreen.routeName: const GetTrackerScreen(),
 };
 
 Future<void> main() async {

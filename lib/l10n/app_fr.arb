@@ -55,12 +55,16 @@
     "@bottomNavigationLinks": {
       "description": "Liens."
     },
-    "settingsItemTitle": "Se déconnecter",
-    "@settingsItemTitle": {
+    "settingsItemGetTracker": "Tracker ID",
+    "@settingsItemGetTracker": {
+      "description": "Tracker ID"
+    },
+    "settingsItemLogout": "Se déconnecter",
+    "@settingsItemLogout": {
       "description": "Se déconnecter"
     },
     "linkFormCreatorTitle": "Éditeur de lien",
-    "@settingsItemTitle": {
+    "@linkFormCreatorTitle": {
       "description": "Éditeur de lien"
     },
     "linkFormCreatorLink": "URL du site Web*",
