@@ -1,6 +1,7 @@
 import 'package:atrap_io/exceptions/link_exception.dart';
 import 'package:atrap_io/models/link_model.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -21,7 +22,6 @@ void main() {
 
     test("Should create new link with success", () async {
       // ARRANGE
-      DateTime now = DateTime.now();
       DocumentReferenceMock userDocumentReference = DocumentReferenceMock();
 
       CollectionReferenceMock linkCollectionReference =
@@ -42,7 +42,7 @@ void main() {
 
       DocumentReferenceMock linkDocumentReference = DocumentReferenceMock();
 
-      LinkModel linkModel = LinkModel.fromJson({
+      LinkModel linkModel = LinkModel.fromJson(const {
         "src": "https://www.example.com",
         "linkId": "link-id",
         "userId": "user-id",
@@ -53,7 +53,6 @@ void main() {
         "utm_term": "",
         "utm_content": "",
         "params": "",
-        "created_at": now,
       });
 
       when(linkDocumentReference.set(linkModel.toJson()))
@@ -81,7 +80,7 @@ void main() {
           "utm_term": "",
           "utm_content": "",
           "params": "",
-          "created_at": now,
+          "created_at": null,
         }),
         returnsNormally,
       );
@@ -113,7 +112,7 @@ void main() {
 
       DocumentReferenceMock linkDocumentReference = DocumentReferenceMock();
 
-      LinkModel linkModel = LinkModel.fromJson({
+      LinkModel linkModel = LinkModel.fromJson(const {
         "src":
             "https://www.example.com?utm_source=instagram&utm_medium=stories&utm_campaign=test",
         "linkId": "link-id",
@@ -125,7 +124,6 @@ void main() {
         "utm_term": "",
         "utm_content": "",
         "params": "",
-        "created_at": now,
       });
 
       when(linkDocumentReference.set(linkModel.toJson()))
@@ -153,7 +151,6 @@ void main() {
           "utm_term": "",
           "utm_content": "",
           "params": "",
-          "created_at": now,
         }),
         returnsNormally,
       );
@@ -418,10 +415,10 @@ void main() {
 
       // ACT
       await linkRepository.deleteLink(
-        LinkModel.fromJson({
+        LinkModel.fromJson(const {
           "uid": "link-id",
           "src": "src",
-          "created_at": now,
+          "created_at": null,
         }),
       );
 
