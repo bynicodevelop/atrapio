@@ -1,4 +1,5 @@
 import 'package:atrap_io/helpers/translate.dart';
+import 'package:atrap_io/responsive.dart';
 import 'package:atrap_io/services/logout/logout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,15 +10,7 @@ class SettingsScreen extends StatelessWidget {
 
   const SettingsScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          t(context)!.settingsTitle,
-        ),
-      ),
-      body: Padding(
+  Widget _view() => Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
@@ -42,6 +35,30 @@ class SettingsScreen extends StatelessWidget {
               ),
             )
           ],
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          t(context)!.settingsTitle,
+        ),
+      ),
+      body: Responsive(
+        mobile: _view(),
+        tablet: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: (MediaQuery.of(context).size.width - 400) / 2,
+          ),
+          child: _view(),
+        ),
+        desktop: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: (MediaQuery.of(context).size.width - 400) / 2,
+          ),
+          child: _view(),
         ),
       ),
     );

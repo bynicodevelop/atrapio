@@ -1,4 +1,5 @@
 import 'package:atrap_io/components/add_link_component.dart';
+import 'package:atrap_io/responsive.dart';
 import 'package:atrap_io/screens/settings_screen.dart';
 import 'package:atrap_io/screens/views/link_view.dart';
 import 'package:atrap_io/services/main_navigation/main_navigation_bloc.dart';
@@ -59,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
               LinkView(),
             ],
           ),
-          floatingActionButton: const AddLinkComponent(),
+          floatingActionButton:
+              Responsive.isMobile(context) ? const AddLinkComponent() : null,
           // bottomNavigationBar: BottomNavigationBar(
           //   items: <BottomNavigationBarItem>[
           //     BottomNavigationBarItem(

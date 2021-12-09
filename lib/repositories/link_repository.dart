@@ -1,4 +1,5 @@
 import 'package:atrap_io/exceptions/link_exception.dart';
+import 'package:atrap_io/helpers/link_helper.dart';
 import 'package:atrap_io/models/link_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -16,13 +17,22 @@ class LinkRepository {
       .collection("users")
       .doc(userId)
       .collection("links")
+      .orderBy(
+        "created_at",
+        descending: true,
+      )
       .snapshots()
       .map(
         (snapshot) => snapshot.docs
-            .map((doc) => LinkModel.fromJson({
-                  ...doc.data(),
-                  ...{"uid": doc.id}
-                }))
+            .map(
+              (doc) => LinkModel.fromJson({
+                ...doc.data(),
+                ...{
+                  "name": doc.data()["name"] ?? "",
+                  "uid": doc.id,
+                }
+              }),
+            )
             .toList(),
       );
 
@@ -31,12 +41,20 @@ class LinkRepository {
       throw LinkException(LinkException.userIdRequired);
     }
 
-    if (params["url"].toString().isEmpty) {
+    if (params["src"].toString().isEmpty) {
       throw LinkException(LinkException.urlIsRequired);
     }
 
     if (params["linkId"].toString().isEmpty) {
       throw LinkException(LinkException.linkIdIsRequired);
+    }
+
+    final LinkHelper linkHelper = LinkHelper();
+
+    String link = linkHelper.linkFactory(params);
+
+    if (link.isNotEmpty) {
+      params["src"] = link;
     }
 
     LinkModel linkModel = LinkModel.fromJson(params);
@@ -58,6 +76,25 @@ class LinkRepository {
     HttpsCallableResult httpsCallableResult = await httpsCallable.call();
 
     return httpsCallableResult.data["linkId"] ?? "";
+  }
+
+  Future<void> updateLink(Map<String, dynamic> params) async {
+    if (params["userId"].toString().isEmpty) {
+      throw LinkException(LinkException.userIdRequired);
+    }
+
+    params["created_at"] = Timestamp.fromDate(params["created_at"]);
+
+    LinkModel linkModel = LinkModel.fromJson(params);
+
+    await firestore
+        .collection("users")
+        .doc(params["userId"])
+        .collection("links")
+        .doc(params["linkId"])
+        .update(
+          linkModel.toJson(),
+        );
   }
 
   Future<void> deleteLink(

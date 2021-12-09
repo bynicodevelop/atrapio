@@ -15,6 +15,7 @@ class AddLinkBloc extends Bloc<AddLinkEvent, AddLinkState> {
     required this.authenticationRepository,
   }) : super(AddLinkInitial()) {
     on<OnCreateLinkEvent>((event, emit) async {
+      Map<String, String> metadata = {};
       emit(AddLinkLoading());
 
       try {
@@ -24,14 +25,17 @@ class AddLinkBloc extends Bloc<AddLinkEvent, AddLinkState> {
           {
             ...event.params,
             ...{
+              "name": metadata["title"],
               "userId": authenticationRepository.userId,
               "linkId": linkId,
+              "metadata": metadata,
             },
           },
         );
 
         emit(AddLinkSuccess());
       } catch (e) {
+        // TODO: Add crash analytics
         emit(AddLinkFailure(
           error: e.toString(),
         ));

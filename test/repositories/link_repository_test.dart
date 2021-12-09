@@ -26,6 +26,9 @@ void main() {
       CollectionReferenceMock linkCollectionReference =
           CollectionReferenceMock();
 
+      when(userDocumentReference.collection("links"))
+          .thenAnswer((_) => linkCollectionReference);
+
       CollectionReferenceMock userCollectionReference =
           CollectionReferenceMock();
 
@@ -36,13 +39,20 @@ void main() {
         (_) => userCollectionReference,
       );
 
-      when(userDocumentReference.collection("links"))
-          .thenAnswer((_) => linkCollectionReference);
-
       DocumentReferenceMock linkDocumentReference = DocumentReferenceMock();
 
-      LinkModel linkModel =
-          LinkModel.fromJson(const {"url": "https://www.example.com"});
+      LinkModel linkModel = LinkModel.fromJson(const {
+        "src": "https://www.example.com",
+        "linkId": "link-id",
+        "userId": "user-id",
+        "utm_source": "",
+        "utm_medium": "",
+        "utm_campaign": "",
+        "utm_id": "",
+        "utm_term": "",
+        "utm_content": "",
+        "params": "",
+      });
 
       when(linkDocumentReference.set(linkModel.toJson()))
           .thenAnswer((_) => Future.value());
@@ -59,14 +69,90 @@ void main() {
       // ASSERT
       expect(
         () async => await linkRepository.createLink({
-          "url": "https://www.example.com",
+          "src": "https://www.example.com",
           "linkId": "link-id",
           "userId": "user-id",
+          "utm_source": "",
+          "utm_medium": "",
+          "utm_campaign": "",
+          "utm_id": "",
+          "utm_term": "",
+          "utm_content": "",
+          "params": "",
+          "created_at": null,
         }),
         returnsNormally,
       );
 
-      verify(linkDocumentReference.set(linkModel.toJson()));
+      verify(await linkDocumentReference.set(linkModel.toJson()));
+    });
+
+    test("Should create new link with queries", () async {
+      // ARRANGE
+      DocumentReferenceMock userDocumentReference = DocumentReferenceMock();
+
+      CollectionReferenceMock linkCollectionReference =
+          CollectionReferenceMock();
+
+      when(userDocumentReference.collection("links"))
+          .thenAnswer((_) => linkCollectionReference);
+
+      CollectionReferenceMock userCollectionReference =
+          CollectionReferenceMock();
+
+      when(userCollectionReference.doc("user-id"))
+          .thenAnswer((_) => userDocumentReference);
+
+      when(firestoreMock.collection("users")).thenAnswer(
+        (_) => userCollectionReference,
+      );
+
+      DocumentReferenceMock linkDocumentReference = DocumentReferenceMock();
+
+      LinkModel linkModel = LinkModel.fromJson(const {
+        "src":
+            "https://www.example.com?utm_source=instagram&utm_medium=stories&utm_campaign=test",
+        "linkId": "link-id",
+        "userId": "user-id",
+        "utm_source": "instagram",
+        "utm_medium": "stories",
+        "utm_campaign": "test",
+        "utm_id": "",
+        "utm_term": "",
+        "utm_content": "",
+        "params": "",
+      });
+
+      when(linkDocumentReference.set(linkModel.toJson()))
+          .thenAnswer((_) => Future.value());
+
+      when(linkCollectionReference.doc("link-id"))
+          .thenAnswer((_) => linkDocumentReference);
+
+      final LinkRepository linkRepository = LinkRepository(
+        firestore: firestoreMock,
+        functions: FirebaseFunctionsMock(),
+      );
+
+      // ACT
+      // ASSERT
+      expect(
+        () async => await linkRepository.createLink({
+          "src": "https://www.example.com",
+          "linkId": "link-id",
+          "userId": "user-id",
+          "utm_source": "instagram",
+          "utm_medium": "stories",
+          "utm_campaign": "test",
+          "utm_id": "",
+          "utm_term": "",
+          "utm_content": "",
+          "params": "",
+        }),
+        returnsNormally,
+      );
+
+      verify(await linkDocumentReference.set(linkModel.toJson()));
     });
 
     test("Should expect an error when userId is empty", () {
@@ -80,7 +166,7 @@ void main() {
       // ASSERT
       expect(
         () async => await linkRepository.createLink({
-          "url": "https://wwww.example.com",
+          "src": "https://wwww.example.com",
           "linkId": "link-id",
           "userId": "",
         }),
@@ -104,7 +190,7 @@ void main() {
       // ASSERT
       expect(
         () async => await linkRepository.createLink({
-          "url": "",
+          "src": "",
           "linkId": "link-id",
           "userId": "user-id",
         }),
@@ -128,7 +214,7 @@ void main() {
       // ASSERT
       expect(
         () async => await linkRepository.createLink({
-          "url": "https://wwww.example.com",
+          "src": "https://wwww.example.com",
           "linkId": "",
           "userId": "user-id",
         }),
@@ -199,7 +285,7 @@ void main() {
 
   //   when(queryDocumentSnapshotMock.data()).thenAnswer(
   //     (_) => Map<String, dynamic>.from({
-  //       "url": "https://www.example.com",
+  //       "src": "https://www.example.com",
   //     }),
   //   );
 
@@ -324,10 +410,11 @@ void main() {
 
       // ACT
       await linkRepository.deleteLink(
-        const LinkModel(
-          uid: "link-id",
-          src: "src",
-        ),
+        LinkModel.fromJson(const {
+          "uid": "link-id",
+          "src": "src",
+          "created_at": null,
+        }),
       );
 
       // ASSERT
