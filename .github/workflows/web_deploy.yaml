@@ -66,14 +66,14 @@ jobs:
 
       - name: Create app.js file
         id: app
-        uses: timheuer/base64-to-file@v1
+        uses: timheuer/base64-to-file@v1.1
         with:
           fileName: "app.js"
           encodedString: ${{ secrets.WEB_APP_JS }}
 
       - name: Move app.js into project
         run: |
-          mv ${{ steps.app.outputs.filePath }} ./web/scripts/
+          mv ${{ steps.app.outputs.filePath }} ./scripts/
 
       - name: Create .firebaserc file
         id: firebaserc
