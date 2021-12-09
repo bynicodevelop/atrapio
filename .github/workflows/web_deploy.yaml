@@ -46,7 +46,7 @@ jobs:
   deploy_web:
     name: Deploy Web App
     runs-on: ubuntu-20.04
-    needs: [deploy_firebase] 
+    needs: [test] 
     if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
 
     steps:
