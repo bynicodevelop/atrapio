@@ -73,7 +73,7 @@ jobs:
 
       - name: Move app.js into project
         run: |
-          mv ${{ steps.app.outputs.filePath }} ./scripts/
+          mv ${{ steps.app.outputs.filePath }} ./web/scripts/
 
       - name: Create .firebaserc file
         id: firebaserc
