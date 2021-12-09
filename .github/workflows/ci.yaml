@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  release:
+  test:
     name: Build and release
     runs-on: ubuntu-20.04
 
@@ -47,3 +47,19 @@ jobs:
 
       - name: Testing
         run: flutter test
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.FLUTTER_HOME }}/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
+
+      - name: Clean flutter
+        run: flutter clean
+
+      - name: Import pub dependencies
+        run: flutter pub get

@@ -1,7 +1,6 @@
 import 'package:atrap_io/exceptions/link_exception.dart';
 import 'package:atrap_io/models/link_model.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -90,8 +89,6 @@ void main() {
 
     test("Should create new link with queries", () async {
       // ARRANGE
-      DateTime now = DateTime.now();
-
       DocumentReferenceMock userDocumentReference = DocumentReferenceMock();
 
       CollectionReferenceMock linkCollectionReference =
@@ -391,8 +388,6 @@ void main() {
 
     test("Should delete link with success", () async {
       // ARRANGE
-      DateTime now = DateTime.now();
-
       DocumentReferenceMock documentReferenceMock = DocumentReferenceMock();
 
       when(documentReferenceMock.delete()).thenAnswer(
