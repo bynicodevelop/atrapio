@@ -81,89 +81,94 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
   Widget _registerForm(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            bottom: 70.0,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 50.0,
+              bottom: 70.0,
+            ),
+            child: Image.asset(
+              "assets/logo_1080_transparent.png",
+              height: 100,
+            ),
           ),
-          child: Image.asset(
-            "assets/logo_1080_transparent.png",
-            height: 100,
+          Text(
+            t(context)!.registerTitle,
+            style: Theme.of(context).textTheme.headline5,
           ),
-        ),
-        Text(
-          t(context)!.registerTitle,
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        BlocListener<RegisterBloc, RegisterState>(
-          listener: (context, state) {
-            if (state is RegisterSuccessState) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                BootstrapScreen.routeName,
-                (route) => false,
-              );
-            }
-
-            if (state is RegisterFailureState) {
-              if (state.error == AuthenticationException.emailAlreadyExists) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      t(context)!.registerErrorEmailAlreadyExists,
-                    ),
-                  ),
+          BlocListener<RegisterBloc, RegisterState>(
+            listener: (context, state) {
+              if (state is RegisterSuccessState) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  BootstrapScreen.routeName,
+                  (route) => false,
                 );
               }
-            }
-          },
-          child: AuthFormComponent.form(
-            buttonLabel: t(context)!.registerButton,
-            emailController: emailController,
-            passwordController: passwordController,
-            emailFocusNode: emailFocusNode,
-            passwordFocusNode: passwordFocusNode,
-            onPressed: (data) => context.read<RegisterBloc>().add(
-                  RegisterSubmitEvent(
-                    email: data['email']!,
-                    password: data['password']!,
+
+              if (state is RegisterFailureState) {
+                if (state.error == AuthenticationException.emailAlreadyExists) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        t(context)!.registerErrorEmailAlreadyExists,
+                      ),
+                    ),
+                  );
+                }
+              }
+            },
+            child: AuthFormComponent.form(
+              buttonLabel: t(context)!.registerButton,
+              emailController: emailController,
+              passwordController: passwordController,
+              emailFocusNode: emailFocusNode,
+              passwordFocusNode: passwordFocusNode,
+              onPressed: (data) => context.read<RegisterBloc>().add(
+                    RegisterSubmitEvent(
+                      email: data['email']!,
+                      password: data['password']!,
+                    ),
                   ),
-                ),
-          ),
-        ),
-        Column(
-          children: [
-            TextButton(
-              onPressed: () => Navigator.pushNamed(
-                context,
-                LoginScreen.routeName,
-              ),
-              child: Text(
-                t(context)!.gotToLoginLink.toUpperCase(),
-              ),
             ),
-          ],
-        )
-      ],
+          ),
+          Column(
+            children: [
+              TextButton(
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  LoginScreen.routeName,
+                ),
+                child: Text(
+                  t(context)!.gotToLoginLink.toUpperCase(),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Responsive(
-        mobile: _wrapper(
-          child: _registerForm(context),
-        ),
-        tablet: _wrapper(
-          child: _registerForm(context),
-          padding: (MediaQuery.of(context).size.width - 400) / 2,
-        ),
-        desktop: _wrapper(
-          child: _registerForm(context),
-          padding: (MediaQuery.of(context).size.width - 400) / 2,
+      body: SafeArea(
+        child: Responsive(
+          mobile: _wrapper(
+            child: _registerForm(context),
+          ),
+          tablet: _wrapper(
+            child: _registerForm(context),
+            padding: (MediaQuery.of(context).size.width - 400) / 2,
+          ),
+          desktop: _wrapper(
+            child: _registerForm(context),
+            padding: (MediaQuery.of(context).size.width - 400) / 2,
+          ),
         ),
       ),
     );
