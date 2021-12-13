@@ -111,8 +111,8 @@ class App extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ListLinksBloc(
-            linkRepository,
-            authenticationRepository,
+            linkRepository: linkRepository,
+            authenticationRepository: authenticationRepository,
           ),
         ),
         BlocProvider(

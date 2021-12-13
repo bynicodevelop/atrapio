@@ -11,10 +11,10 @@ class ListLinksBloc extends Bloc<ListLinksEvent, ListLinksState> {
   final LinkRepository linkRepository;
   final AuthenticationRepository authenticationRepository;
 
-  ListLinksBloc(
-    this.linkRepository,
-    this.authenticationRepository,
-  ) : super(
+  ListLinksBloc({
+    required this.linkRepository,
+    required this.authenticationRepository,
+  }) : super(
           const ListLinksInitialState(
             links: [],
             refresh: 0,
