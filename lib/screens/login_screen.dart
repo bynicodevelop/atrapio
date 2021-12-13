@@ -80,70 +80,73 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   Widget _loginForm(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            bottom: 70.0,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 50.0,
+              bottom: 70.0,
+            ),
+            child: Image.asset(
+              "assets/logo_1080_transparent.png",
+              height: 100,
+            ),
           ),
-          child: Image.asset(
-            "assets/logo_1080_transparent.png",
-            height: 100,
+          Text(
+            t(context)!.loginTitle,
+            style: Theme.of(context).textTheme.headline5,
           ),
-        ),
-        Text(
-          t(context)!.loginTitle,
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        BlocListener<LoginBloc, LoginState>(
-          listener: (context, state) {
-            if (state is LoginSuccessState) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                BootstrapScreen.routeName,
-                (route) => false,
-              );
-            }
-
-            if (state is LoginFailureState) {
-              if (state.error == AuthenticationException.badCredentials) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(t(context)!.loginErrorBadCredentials),
-                  ),
+          BlocListener<LoginBloc, LoginState>(
+            listener: (context, state) {
+              if (state is LoginSuccessState) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  BootstrapScreen.routeName,
+                  (route) => false,
                 );
               }
-            }
-          },
-          child: AuthFormComponent.form(
-            buttonLabel: t(context)!.connexionButton,
-            emailController: emailController,
-            passwordController: passwordController,
-            emailFocusNode: emailFocusNode,
-            passwordFocusNode: passwordFocusNode,
-            onPressed: (data) => context.read<LoginBloc>().add(
-                  LoginSubmitEvent(
-                    email: data["email"]!,
-                    password: data["password"]!,
+    
+              if (state is LoginFailureState) {
+                if (state.error == AuthenticationException.badCredentials) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(t(context)!.loginErrorBadCredentials),
+                    ),
+                  );
+                }
+              }
+            },
+            child: AuthFormComponent.form(
+              buttonLabel: t(context)!.connexionButton,
+              emailController: emailController,
+              passwordController: passwordController,
+              emailFocusNode: emailFocusNode,
+              passwordFocusNode: passwordFocusNode,
+              onPressed: (data) => context.read<LoginBloc>().add(
+                    LoginSubmitEvent(
+                      email: data["email"]!,
+                      password: data["password"]!,
+                    ),
                   ),
-                ),
-          ),
-        ),
-        Column(
-          children: [
-            TextButton(
-              onPressed: () => Navigator.pushNamed(
-                context,
-                RegisterScreen.routeName,
-              ),
-              child: Text(
-                t(context)!.gotToRegisterLink.toUpperCase(),
-              ),
             ),
-          ],
-        )
-      ],
+          ),
+          Column(
+            children: [
+              TextButton(
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  RegisterScreen.routeName,
+                ),
+                child: Text(
+                  t(context)!.gotToRegisterLink.toUpperCase(),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -152,17 +155,19 @@ class _LoginScreenState extends State<LoginScreen> {
     final Widget child = _loginForm(context);
 
     return Scaffold(
-      body: Responsive(
-        mobile: _wrapper(
-          child: child,
-        ),
-        tablet: _wrapper(
-          child: child,
-          padding: (MediaQuery.of(context).size.width - 400) / 2,
-        ),
-        desktop: _wrapper(
-          child: child,
-          padding: (MediaQuery.of(context).size.width - 400) / 2,
+      body: SafeArea(
+        child: Responsive(
+          mobile: _wrapper(
+            child: child,
+          ),
+          tablet: _wrapper(
+            child: child,
+            padding: (MediaQuery.of(context).size.width - 400) / 2,
+          ),
+          desktop: _wrapper(
+            child: child,
+            padding: (MediaQuery.of(context).size.width - 400) / 2,
+          ),
         ),
       ),
     );
