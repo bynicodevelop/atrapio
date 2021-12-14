@@ -164,6 +164,9 @@ class _GetTrackerScreenState extends State<GetTrackerScreen> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 30.0,
+          ),
         ],
       );
 
@@ -186,35 +189,37 @@ class _GetTrackerScreenState extends State<GetTrackerScreen> {
       appBar: AppBar(
         title: const Text('Tracking ID'),
       ),
-      body: BlocConsumer<GenerateTrackerBloc, GenerateTrackerState>(
-        bloc: context.read<GenerateTrackerBloc>()
-          ..add(OnGenerateTrackerLoadingEvent()),
-        listener: (context, state) {
-          if (state is GenerateTrackerSuccessState &&
-              !state.trackingIdModel.isEmpty()) {
-            _trackingScriptController.text = _trackingScript(
-              state.trackingIdModel.trackingId,
+      body: SingleChildScrollView(
+        child: BlocConsumer<GenerateTrackerBloc, GenerateTrackerState>(
+          bloc: context.read<GenerateTrackerBloc>()
+            ..add(OnGenerateTrackerLoadingEvent()),
+          listener: (context, state) {
+            if (state is GenerateTrackerSuccessState &&
+                !state.trackingIdModel.isEmpty()) {
+              _trackingScriptController.text = _trackingScript(
+                state.trackingIdModel.trackingId,
+              );
+
+              _trackingScriptEventController.text = _trackingScriptEvent();
+            }
+          },
+          builder: (context, state) {
+            if (state is GenerateTrackerSuccessState) {
+              return state.trackingIdModel.isEmpty()
+                  ? _wrapper(
+                      child: const GenerateTrackingIdForm(),
+                      width: 400,
+                    )
+                  : _wrapper(
+                      child: _trackingIdInstall(state),
+                    );
+            }
+
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-
-            _trackingScriptEventController.text = _trackingScriptEvent();
-          }
-        },
-        builder: (context, state) {
-          if (state is GenerateTrackerSuccessState) {
-            return state.trackingIdModel.isEmpty()
-                ? _wrapper(
-                    child: const GenerateTrackingIdForm(),
-                    width: 400,
-                  )
-                : _wrapper(
-                    child: _trackingIdInstall(state),
-                  );
-          }
-
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+          },
+        ),
       ),
     );
   }

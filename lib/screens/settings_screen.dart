@@ -2,6 +2,7 @@ import 'package:atrap_io/helpers/translate.dart';
 import 'package:atrap_io/responsive.dart';
 import 'package:atrap_io/screens/get_tracker_screen.dart';
 import 'package:atrap_io/services/logout/logout_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,21 +16,22 @@ class SettingsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
-            Card(
-              child: ListTile(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  GetTrackerScreen.routeName,
-                ),
-                title: Text(
-                  t(context)!.settingsItemGetTracker,
-                ),
-                trailing: const FaIcon(
-                  FontAwesomeIcons.chevronRight,
-                  size: 20.0,
+            if (kIsWeb)
+              Card(
+                child: ListTile(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    GetTrackerScreen.routeName,
+                  ),
+                  title: Text(
+                    t(context)!.settingsItemGetTracker,
+                  ),
+                  trailing: const FaIcon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 20.0,
+                  ),
                 ),
               ),
-            ),
             BlocBuilder<LogoutBloc, LogoutState>(
               builder: (context, state) => Card(
                 child: ListTile(

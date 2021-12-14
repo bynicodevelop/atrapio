@@ -49,3 +49,5 @@ web/scripts/app.js
 ios/Runner/GoogleService-Info.plist
 macos/Runner/GoogleService-Info.plist
 android/app/google-services.json
+.firebaserc
+web/scripts/app-prod.js
