@@ -1,6 +1,8 @@
 import 'package:atrap_io/helpers/translate.dart';
 import 'package:atrap_io/responsive.dart';
+import 'package:atrap_io/screens/get_tracker_screen.dart';
 import 'package:atrap_io/services/logout/logout_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,10 +12,26 @@ class SettingsScreen extends StatelessWidget {
 
   const SettingsScreen({Key? key}) : super(key: key);
 
-  Widget _view() => Padding(
+  Widget _view(BuildContext context) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
+            if (kIsWeb)
+              Card(
+                child: ListTile(
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    GetTrackerScreen.routeName,
+                  ),
+                  title: Text(
+                    t(context)!.settingsItemGetTracker,
+                  ),
+                  trailing: const FaIcon(
+                    FontAwesomeIcons.chevronRight,
+                    size: 20.0,
+                  ),
+                ),
+              ),
             BlocBuilder<LogoutBloc, LogoutState>(
               builder: (context, state) => Card(
                 child: ListTile(
@@ -21,7 +39,7 @@ class SettingsScreen extends StatelessWidget {
                         LogoutSubmitEvent(),
                       ),
                   title: Text(
-                    t(context)!.settingsItemTitle,
+                    t(context)!.settingsItemLogout,
                     style: Theme.of(context).textTheme.subtitle1!.copyWith(
                           color: Colors.red,
                         ),
@@ -47,18 +65,18 @@ class SettingsScreen extends StatelessWidget {
         ),
       ),
       body: Responsive(
-        mobile: _view(),
+        mobile: _view(context),
         tablet: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: (MediaQuery.of(context).size.width - 400) / 2,
           ),
-          child: _view(),
+          child: _view(context),
         ),
         desktop: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: (MediaQuery.of(context).size.width - 400) / 2,
           ),
-          child: _view(),
+          child: _view(context),
         ),
       ),
     );
