@@ -13,6 +13,7 @@ class LinkModel extends Equatable {
   final String utmContent;
   final String linkId;
   final String params;
+  final int clicks;
   final Map<String, dynamic> metadata;
   final DateTime? createdAt;
 
@@ -29,6 +30,7 @@ class LinkModel extends Equatable {
     this.linkId = "",
     this.params = "",
     this.metadata = const {},
+    this.clicks = 0,
     this.createdAt,
   });
 
@@ -45,6 +47,7 @@ class LinkModel extends Equatable {
         "utm_content": utmContent,
         "linkId": linkId,
         "metadata": metadata,
+        "clicks": clicks,
         "params": params,
       };
 
@@ -65,6 +68,7 @@ class LinkModel extends Equatable {
         utmContent = json['utm_content'] ?? "",
         linkId = json['linkId'] ?? "",
         params = json['params'] ?? "",
+        clicks = json['clicks'] ?? 0,
         metadata = json['metadata'] ?? {};
 
   @override
@@ -82,5 +86,6 @@ class LinkModel extends Equatable {
         linkId,
         params,
         metadata,
+        clicks,
       ];
 }

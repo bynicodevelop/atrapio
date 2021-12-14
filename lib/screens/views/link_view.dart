@@ -83,6 +83,7 @@ class _LinkViewState extends State<LinkView> {
 
     return Card(
       child: ListTile(
+        dense: true,
         onLongPress: () => _modal(
           context,
           state.links[index],
@@ -92,9 +93,22 @@ class _LinkViewState extends State<LinkView> {
               ? state.links[index].name
               : "$kDomain/l/${state.links[index].linkId}",
         ),
-        subtitle: Text(
-          state.links[index].src,
-          overflow: TextOverflow.ellipsis,
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 8.0,
+              ),
+              child: Text(
+                state.links[index].src,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Text(
+              "Clicks : ${state.links[index].clicks}",
+            ),
+          ],
         ),
         trailing: SizedBox(
           width: actions.length * 50.0,
