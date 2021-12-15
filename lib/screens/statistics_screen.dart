@@ -6,17 +6,22 @@ class StatisticsScreen extends StatelessWidget {
 
   const StatisticsScreen({Key? key}) : super(key: key);
 
-  Widget _page({required String site, required String stats}) => Card(
+  Widget _page({
+    required String site,
+    required String stats,
+  }) =>
+      Card(
         child: ListTile(
           title: Text(site),
           trailing: Text(stats),
         ),
       );
 
-  Widget _statsCard(
-          {required BuildContext context,
-          required String stats,
-          required String title}) =>
+  Widget _statsCard({
+    required BuildContext context,
+    required String stats,
+    required String title,
+  }) =>
       Padding(
         padding: const EdgeInsets.only(
           bottom: 20.0,
@@ -97,9 +102,18 @@ class StatisticsScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6!.copyWith(),
                     ),
                   ),
-                  _page(site: "google.com", stats: "1.M"),
-                  _page(site: "google.com", stats: "1.M"),
-                  _page(site: "google.com", stats: "1.M"),
+                  _page(
+                    site: "google.com",
+                    stats: "1.M",
+                  ),
+                  _page(
+                    site: "google.com",
+                    stats: "1.M",
+                  ),
+                  _page(
+                    site: "google.com",
+                    stats: "1.M",
+                  ),
                 ],
               ),
             )
