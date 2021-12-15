@@ -6,105 +6,117 @@ class StatisticsScreen extends StatelessWidget {
 
   const StatisticsScreen({Key? key}) : super(key: key);
 
-  Widget _page() => const Card(
+  Widget _page({
+    required String site,
+    required String stats,
+  }) =>
+      Card(
         child: ListTile(
-          title: Text("google.com"),
-          trailing: Text("1.M"),
+          title: Text(site),
+          trailing: Text(stats),
+        ),
+      );
+
+  Widget _statsCard({
+    required BuildContext context,
+    required String stats,
+    required String title,
+  }) =>
+      Padding(
+        padding: const EdgeInsets.only(
+          bottom: 20.0,
+        ),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20.0,
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 8.0,
+                  ),
+                  child: Text(
+                    stats,
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            ),
+          ),
         ),
       );
 
   Widget _view(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 10.0,
+          horizontal: 8.0,
         ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "User Tracking ID",
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
-                        color: Colors.black,
-                      ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 150,
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Text(
-                        "5000",
-                        style:
-                            Theme.of(context).textTheme.headline3!.copyWith(),
-                      ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        "Visite",
-                        style:
-                            Theme.of(context).textTheme.headline6!.copyWith(),
-                      ),
-                    ],
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20.0,
+                      bottom: 8.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "A.I-2021123-1",
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  width: 150,
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      Text(
-                        "5000",
-                        style:
-                            Theme.of(context).textTheme.headline3!.copyWith(),
-                      ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        "Conversion",
-                        style:
-                            Theme.of(context).textTheme.headline6!.copyWith(),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Nombre de viste par page",
-                  style: Theme.of(context).textTheme.headline6!.copyWith(),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            // SliverList(
-            //   delegate: SliverChildListDelegate(
-            //     [
-            //       _page(),
-            //       _page(),
-            //       _page(),
-            //       _page(),
-            //     ],
-            //   ),
-            // ),
-            SizedBox(
-              child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                children: [
-                  _page(),
                 ],
               ),
             ),
+            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 5.0,
+                childAspectRatio: 16 / 13,
+              ),
+              delegate: SliverChildListDelegate.fixed([
+                _statsCard(context: context, stats: "5000", title: "Visites"),
+                _statsCard(
+                    context: context, stats: "5000", title: "Conversions"),
+              ]),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Nombre de viste par page",
+                      style: Theme.of(context).textTheme.headline6!.copyWith(),
+                    ),
+                  ),
+                  _page(
+                    site: "google.com",
+                    stats: "1.M",
+                  ),
+                  _page(
+                    site: "google.com",
+                    stats: "1.M",
+                  ),
+                  _page(
+                    site: "google.com",
+                    stats: "1.M",
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       );
@@ -121,7 +133,12 @@ class StatisticsScreen extends StatelessWidget {
       body: Responsive(
         mobile: _view(context),
         tablet: _view(context),
-        desktop: _view(context),
+        desktop: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: (MediaQuery.of(context).size.width - 800) / 2,
+          ),
+          child: _view(context),
+        ),
       ),
     );
   }
