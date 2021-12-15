@@ -1,16 +1,54 @@
-# atrap_io
+# Installation
 
-A new Flutter project.
+```
+git clone git@github.com:bynicodevelop/atrapio.git
+```
 
-## Getting Started
+# IOS Configuration
 
-This project is a starting point for a Flutter application.
+Intégré le fichier de configuration fourni par firebase dans le cadre de la création d'une nouvelle application dans la console Firebase.
 
-A few resources to get you started if this is your first Flutter project:
+Place le ficher :
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```
+ios > Runner > GoogleService-Info.plist
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Android Configuration
+
+Intégré le fichier de configuration fourni par firebase dans le cadre de la création d'une nouvelle application dans la console Firebase.
+
+Place le ficher :
+
+```
+android > app > google-services.json
+```
+
+# Web Configuration
+
+Intégré le fichier de configuration fourni par firebase dans le cadre de la création d'une nouvelle application dans la console Firebase.
+
+Créez un fichier dans
+
+```
+web > scripts > app.js
+```
+
+Et ajoutez les données de configuration donné par Firebase :
+
+```
+var firebaseConfig = {
+  apiKey: "XXX",
+  authDomain: "XXX.firebaseapp.com",
+  projectId: "XXX",
+  storageBucket: "XXX.appspot.com",
+  messagingSenderId: "XXX",
+  appId: "X",
+};
+
+firebase.initializeApp(firebaseConfig);
+
+firebase.firestore().useEmulator("localhost", 8080); // Juste pour le développement
+firebase.functions().useEmulator("localhost", 5001); // Juste pour le développement
+firebase.auth().useEmulator("http://localhost:9099"); // Juste pour le développement
+```
