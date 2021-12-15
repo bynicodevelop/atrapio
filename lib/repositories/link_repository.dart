@@ -37,15 +37,21 @@ class LinkRepository {
 
   Future<void> createLink(Map<String, dynamic> params) async {
     if (params["userId"].toString().isEmpty) {
-      throw LinkException(LinkException.userIdRequired);
+      throw LinkException(
+        LinkException.userIdRequired,
+      );
     }
 
     if (params["src"].toString().isEmpty) {
-      throw LinkException(LinkException.urlIsRequired);
+      throw LinkException(
+        LinkException.urlIsRequired,
+      );
     }
 
     if (params["linkId"].toString().isEmpty) {
-      throw LinkException(LinkException.linkIdIsRequired);
+      throw LinkException(
+        LinkException.linkIdIsRequired,
+      );
     }
 
     final LinkHelper linkHelper = LinkHelper();
@@ -100,4 +106,80 @@ class LinkRepository {
     LinkModel linkModel,
   ) async =>
       await firestore.collection("links").doc(linkModel.uid).delete();
+
+  Future<LinkModel> getLinkById(Map<String, dynamic> params) async {
+    if (params["userId"].toString().isEmpty) {
+      throw LinkException(
+        LinkException.userIdRequired,
+      );
+    }
+
+    if (params["linkId"].toString().isEmpty) {
+      throw LinkException(
+        LinkException.linkIdIsRequired,
+      );
+    }
+
+    DocumentSnapshot<Map<String, dynamic>> linkDocumentSnapshot =
+        await firestore
+            .collection("users")
+            .doc(params["userId"])
+            .collection("links")
+            .doc(params["linkId"])
+            .get();
+
+    if (!linkDocumentSnapshot.exists) {
+      throw LinkException(
+        LinkException.invalidLinkId,
+      );
+    }
+
+    QuerySnapshot<Map<String, dynamic>> clicksPerDays = await firestore
+        .doc(linkDocumentSnapshot.get("linkRef"))
+        .collection("clicks-by-days")
+        .where(
+          "timestamp",
+          isGreaterThan: DateTime.now()
+              .subtract(
+                const Duration(
+                  days: 1,
+                ),
+              )
+              .millisecondsSinceEpoch,
+        )
+        .limit(1)
+        .get();
+
+    QuerySnapshot<Map<String, dynamic>> clicksPerHours = await firestore
+        .doc(linkDocumentSnapshot.get("linkRef"))
+        .collection("clicks-by-hours")
+        .where(
+          "timestamp",
+          isGreaterThan: DateTime.now()
+              .subtract(
+                const Duration(
+                  hours: 1,
+                ),
+              )
+              .millisecondsSinceEpoch,
+        )
+        .limit(1)
+        .get();
+
+    return LinkModel.fromJson({
+      ...linkDocumentSnapshot.data()!,
+      ...{
+        "name": linkDocumentSnapshot.data()!["name"] ?? "",
+        "uid": linkDocumentSnapshot.id,
+        "stats": {
+          "clicks_per_days": clicksPerDays.docs.isNotEmpty
+              ? clicksPerDays.docs[0].data()["value"]
+              : 0,
+          "clicks_per_hours": clicksPerHours.docs.isNotEmpty
+              ? clicksPerHours.docs[0].data()["value"]
+              : 0,
+        },
+      }
+    });
+  }
 }
