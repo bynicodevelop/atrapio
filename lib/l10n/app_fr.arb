@@ -55,12 +55,16 @@
     "@bottomNavigationLinks": {
       "description": "Liens."
     },
-    "settingsItemTitle": "Se déconnecter",
-    "@settingsItemTitle": {
+    "settingsItemGetTracker": "Tracker ID",
+    "@settingsItemGetTracker": {
+      "description": "Tracker ID"
+    },
+    "settingsItemLogout": "Se déconnecter",
+    "@settingsItemLogout": {
       "description": "Se déconnecter"
     },
     "linkFormCreatorTitle": "Éditeur de lien",
-    "@settingsItemTitle": {
+    "@linkFormCreatorTitle": {
       "description": "Éditeur de lien"
     },
     "linkFormCreatorLink": "URL du site Web*",
@@ -170,5 +174,41 @@
     "updadeLinkUpdateButton": "Mettre à jour",
     "@updadeLinkUpdateButton": {
       "description": "Mettre à jour"
+    },
+    "trackingIdTitleConfigureTracker": "Configurez votre tracker",
+    "@trackingIdTitleConfigureTracker": {
+      "description": "Configurez votre tracker"
+    },
+    "trackingIdInstruction": "Copiez le code ci-dessous et collez-le entre les balises <head> de votre site web.",
+    "@trackingIdInstruction": {
+      "description": "Copiez le code ci-dessous et collez-le entre les balises <head> de votre site web."
+    },
+    "trackingIdTextFieldLabel": "Tracking Script",
+    "@trackingIdTextFieldLabel": {
+      "description": "Tracking Script"
+    },
+    "trackingIdTitleConfigureEvent": "Configurez un événement",
+    "@trackingIdTitleConfigureEvent": {
+      "description": "Configurer un événement"
+    },
+    "trackingIdInstructionEvent": "Vous pouvez aussi ajouter différents événement à votre site web. Par exemple, vous pouvez ajouter un événement de conversion à votre site web.",
+    "@trackingIdInstructionEvent": {
+      "description": "Vous pouvez aussi ajouter différents événement à votre site web. Par exemple, vous pouvez ajouter un événement de conversion à votre site web."
+    },
+    "trackingIdInstructionValue": "Optionnel : vous pouvez ajouter une valeur associée à votre événement.",
+    "@trackingIdInstructionValue": {
+      "description": "Optionnel : vous pouvez ajouter une valeur associée à votre événement."
+    },
+    "trackingIdTextFieldLabelEvent": "Event Script",
+    "@trackingIdTextFieldLabelEvent": {
+      "description": "Event Script"
+    },
+    "trackingIdTextFieldHelperEvent": "Événements possibles : click, pageview, screenview, prospect, transaction",
+    "@trackingIdTextFieldHelperEvent": {
+      "description": "Événements possibles : click, pageview, screenview, prospect, transaction"
+    },
+    "trackingIdCopiedMessage": "Le script a été copié.",
+    "@trackingIdCopiedMessage": {
+      "description": "Le script a été copié."
     }
 }

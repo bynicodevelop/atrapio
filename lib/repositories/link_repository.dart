@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:atrap_io/exceptions/link_exception.dart';
 import 'package:atrap_io/helpers/link_helper.dart';
 import 'package:atrap_io/models/link_model.dart';
@@ -23,17 +25,16 @@ class LinkRepository {
       )
       .snapshots()
       .map(
-        (snapshot) => snapshot.docs
-            .map(
-              (doc) => LinkModel.fromJson({
-                ...doc.data(),
-                ...{
-                  "name": doc.data()["name"] ?? "",
-                  "uid": doc.id,
-                }
-              }),
-            )
-            .toList(),
+        (QuerySnapshot<Map<String, dynamic>> snapshot) =>
+            snapshot.docs.map((doc) {
+          return LinkModel.fromJson({
+            ...doc.data(),
+            ...{
+              "name": doc.data()["name"] ?? "",
+              "uid": doc.id,
+            }
+          });
+        }).toList(),
       );
 
   Future<void> createLink(Map<String, dynamic> params) async {

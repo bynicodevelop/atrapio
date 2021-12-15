@@ -1,3 +1,4 @@
+import 'package:atrap_io/components/card_list_link_component.dart';
 import 'package:atrap_io/components/link_form_component.dart';
 import 'package:atrap_io/components/update_link_form_component.dart';
 import 'package:atrap_io/config/constants.dart';
@@ -23,18 +24,7 @@ class _LinkViewState extends State<LinkView> {
   final ScrollController _linkFormSrollController = ScrollController();
   final ScrollController _linkListSrollController = ScrollController();
 
-  void _modal(
-    BuildContext context,
-    LinkModel linkModel,
-  ) =>
-      showModalBottomSheet(
-        context: context,
-        builder: (context) => UpdateLinkFormComponent(
-          linkModel: linkModel,
-        ),
-      );
-
-  Card _itemCard(
+  CardListLinkComponent _itemCard(
     BuildContext context,
     ListLinksInitialState state,
     int index,
@@ -81,29 +71,9 @@ class _LinkViewState extends State<LinkView> {
       );
     }
 
-    return Card(
-      child: ListTile(
-        onLongPress: () => _modal(
-          context,
-          state.links[index],
-        ),
-        title: Text(
-          state.links[index].name.isNotEmpty
-              ? state.links[index].name
-              : "$kDomain/l/${state.links[index].linkId}",
-        ),
-        subtitle: Text(
-          state.links[index].src,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: SizedBox(
-          width: actions.length * 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: actions,
-          ),
-        ),
-      ),
+    return CardListLinkComponent(
+      link: state.links[index],
+      actions: actions,
     );
   }
 
