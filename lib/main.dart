@@ -6,6 +6,7 @@ import 'package:atrap_io/repositories/link_repository.dart';
 import 'package:atrap_io/screens/login_screen.dart';
 import 'package:atrap_io/screens/register_screen.dart';
 import 'package:atrap_io/screens/settings_screen.dart';
+import 'package:atrap_io/screens/statistics_screen.dart';
 import 'package:atrap_io/services/add_link/add_link_bloc.dart';
 import 'package:atrap_io/services/app/app_bloc.dart';
 import 'package:atrap_io/services/auth_form/auth_form_bloc.dart';
@@ -30,6 +31,7 @@ final Map<String, Widget> routes = {
   LoginScreen.routeName: const LoginScreen(),
   RegisterScreen.routeName: const RegisterScreen(),
   SettingsScreen.routeName: const SettingsScreen(),
+  StatisticsScreen.routeName: const StatisticsScreen(),
 };
 
 Future<void> main() async {
@@ -149,7 +151,7 @@ class AppView extends StatelessWidget {
       supportedLocales: const <Locale>[
         Locale('fr', ''),
       ],
-      initialRoute: BootstrapScreen.routeName,
+      initialRoute: StatisticsScreen.routeName,
       onGenerateRoute: (settings) {
         return PageRouteBuilder(
           settings: settings,
