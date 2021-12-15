@@ -166,7 +166,7 @@ class AppView extends StatelessWidget {
       supportedLocales: const <Locale>[
         Locale('fr', ''),
       ],
-      initialRoute: StatisticsScreen.routeName,
+      initialRoute: BootstrapScreen.routeName,
       onGenerateRoute: (settings) {
         return PageRouteBuilder(
           settings: settings,
