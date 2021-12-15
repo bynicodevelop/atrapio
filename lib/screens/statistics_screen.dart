@@ -16,7 +16,6 @@ class StatisticsScreen extends StatelessWidget {
   Widget _view(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 8.0,
-          vertical: 20.0,
         ),
         child: CustomScrollView(
           slivers: [
@@ -25,6 +24,7 @@ class StatisticsScreen extends StatelessWidget {
                 [
                   Padding(
                     padding: const EdgeInsets.only(
+                      top: 20.0,
                       bottom: 8.0,
                     ),
                     child: Row(
