@@ -6,10 +6,44 @@ class StatisticsScreen extends StatelessWidget {
 
   const StatisticsScreen({Key? key}) : super(key: key);
 
-  Widget _page() => const Card(
+  Widget _page({required String site, required String stats}) => Card(
         child: ListTile(
-          title: Text("google.com"),
-          trailing: Text("1.M"),
+          title: Text(site),
+          trailing: Text(stats),
+        ),
+      );
+
+  Widget _statsCard(
+          {required BuildContext context,
+          required String stats,
+          required String title}) =>
+      Padding(
+        padding: const EdgeInsets.only(
+          bottom: 20.0,
+        ),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 20.0,
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 8.0,
+                  ),
+                  child: Text(
+                    stats,
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
+            ),
+          ),
         ),
       );
 
@@ -48,64 +82,9 @@ class StatisticsScreen extends StatelessWidget {
                 childAspectRatio: 16 / 13,
               ),
               delegate: SliverChildListDelegate.fixed([
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 20.0,
-                  ),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 20.0,
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 8.0,
-                            ),
-                            child: Text(
-                              "5000",
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                          ),
-                          Text(
-                            "Visites",
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 20.0,
-                  ),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 20.0,
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              bottom: 8.0,
-                            ),
-                            child: Text(
-                              "5000",
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                          ),
-                          Text(
-                            "Conversions",
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                _statsCard(context: context, stats: "5000", title: "Visites"),
+                _statsCard(
+                    context: context, stats: "5000", title: "Conversions"),
               ]),
             ),
             SliverList(
@@ -118,10 +97,9 @@ class StatisticsScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6!.copyWith(),
                     ),
                   ),
-                  _page(),
-                  _page(),
-                  _page(),
-                  _page(),
+                  _page(site: "google.com", stats: "1.M"),
+                  _page(site: "google.com", stats: "1.M"),
+                  _page(site: "google.com", stats: "1.M"),
                 ],
               ),
             )
@@ -141,7 +119,12 @@ class StatisticsScreen extends StatelessWidget {
       body: Responsive(
         mobile: _view(context),
         tablet: _view(context),
-        desktop: _view(context),
+        desktop: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: (MediaQuery.of(context).size.width - 800) / 2,
+          ),
+          child: _view(context),
+        ),
       ),
     );
   }
