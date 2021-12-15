@@ -26,9 +26,9 @@ android > app > google-services.json
 
 # Web Configuration
 
-Intégré le fichier de configuration fourni par firebase dans le cadre de la création d'une nouvelle application dans la console Firebase.
+Intégré les données de configuration fourni par firebase dans le cadre de la création d'une nouvelle application dans la console Firebase.
 
-Créez un fichier dans
+Créez un fichier `app.js` dans
 
 ```
 web > scripts > app.js
