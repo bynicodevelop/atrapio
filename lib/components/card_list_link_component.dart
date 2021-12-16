@@ -1,6 +1,7 @@
 import 'package:atrap_io/components/update_link_form_component.dart';
 import 'package:atrap_io/config/constants.dart';
 import 'package:atrap_io/models/link_model.dart';
+import 'package:atrap_io/screens/link_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class CardListLinkComponent extends StatelessWidget {
@@ -29,6 +30,10 @@ class CardListLinkComponent extends StatelessWidget {
     return Card(
       child: ListTile(
         dense: true,
+        onTap: () => Navigator.pushNamed(
+          context,
+          "${LinKDetailsScreen.routeName}/${link.linkId}",
+        ),
         onLongPress: () => _modal(
           context,
           link,

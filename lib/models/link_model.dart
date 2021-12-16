@@ -15,6 +15,7 @@ class LinkModel extends Equatable {
   final String params;
   final int clicks;
   final Map<String, dynamic> metadata;
+  final Map<String, dynamic> stats;
   final DateTime? createdAt;
 
   const LinkModel({
@@ -30,6 +31,7 @@ class LinkModel extends Equatable {
     this.linkId = "",
     this.params = "",
     this.metadata = const {},
+    this.stats = const {},
     this.clicks = 0,
     this.createdAt,
   });
@@ -47,6 +49,7 @@ class LinkModel extends Equatable {
         "utm_content": utmContent,
         "linkId": linkId,
         "metadata": metadata,
+        "stats": stats,
         "clicks": clicks,
         "params": params,
       };
@@ -69,7 +72,8 @@ class LinkModel extends Equatable {
         linkId = json['linkId'] ?? "",
         params = json['params'] ?? "",
         clicks = json['clicks'] ?? 0,
-        metadata = json['metadata'] ?? {};
+        metadata = json['metadata'] ?? {},
+        stats = json['stats'] ?? {};
 
   @override
   List<Object?> get props => [
@@ -86,6 +90,7 @@ class LinkModel extends Equatable {
         linkId,
         params,
         metadata,
+        stats,
         clicks,
       ];
 }

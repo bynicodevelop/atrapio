@@ -5,6 +5,7 @@ import 'package:atrap_io/repositories/authentication_repository.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
 import 'package:atrap_io/repositories/tracker_repository.dart';
 import 'package:atrap_io/screens/get_tracker_screen.dart';
+import 'package:atrap_io/screens/link_details_screen.dart';
 import 'package:atrap_io/screens/login_screen.dart';
 import 'package:atrap_io/screens/register_screen.dart';
 import 'package:atrap_io/screens/settings_screen.dart';
@@ -14,6 +15,7 @@ import 'package:atrap_io/services/app/app_bloc.dart';
 import 'package:atrap_io/services/auth_form/auth_form_bloc.dart';
 import 'package:atrap_io/services/delete_link/delete_link_bloc.dart';
 import 'package:atrap_io/services/generate_tracker/generate_tracker_bloc.dart';
+import 'package:atrap_io/services/link_details/link_details_bloc.dart';
 import 'package:atrap_io/services/list_links/list_links_bloc.dart';
 import 'package:atrap_io/services/login/login_bloc.dart';
 import 'package:atrap_io/services/logout/logout_bloc.dart';
@@ -36,6 +38,7 @@ final Map<String, Widget> routes = {
   SettingsScreen.routeName: const SettingsScreen(),
   StatisticsScreen.routeName: const StatisticsScreen(),
   GetTrackerScreen.routeName: const GetTrackerScreen(),
+  LinKDetailsScreen.routeName: const LinKDetailsScreen(),
 };
 
 Future<void> main() async {
@@ -127,6 +130,12 @@ class App extends StatelessWidget {
           ),
         ),
         BlocProvider(
+          create: (context) => LinkDetailsBloc(
+            linkRepository: linkRepository,
+            authenticationRepository: authenticationRepository,
+          ),
+        ),
+        BlocProvider(
           create: (context) => DeleteLinkBloc(
             linkRepository,
           ),
@@ -168,6 +177,19 @@ class AppView extends StatelessWidget {
       ],
       initialRoute: BootstrapScreen.routeName,
       onGenerateRoute: (settings) {
+        String routeName = settings.name!;
+
+        if (settings.name!.contains(LinKDetailsScreen.routeName)) {
+          routeName = LinKDetailsScreen.routeName;
+
+          settings = RouteSettings(
+            arguments: {
+              "data": settings.name!.split("/").last,
+            },
+            name: routeName,
+          );
+        }
+
         return PageRouteBuilder(
           settings: settings,
           pageBuilder: (context, animation, secondaryAnimation) =>
