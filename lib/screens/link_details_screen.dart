@@ -176,18 +176,27 @@ class LinKDetailsScreen extends StatelessWidget {
         title: Text(t(context)!.linkDetailsTitle),
       ),
       body: Responsive(
-        mobile: _view(context, args),
+        mobile: _view(
+          context,
+          args,
+        ),
         tablet: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: (MediaQuery.of(context).size.width - 600) / 2,
           ),
-          child: _view(context, args),
+          child: _view(
+            context,
+            args,
+          ),
         ),
         desktop: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: (MediaQuery.of(context).size.width - 600) / 2,
           ),
-          child: _view(context, args),
+          child: _view(
+            context,
+            args,
+          ),
         ),
       ),
     );
