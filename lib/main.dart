@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:atrap_io/bootstrap_screen.dart';
+import 'package:atrap_io/firebase_options.dart';
 import 'package:atrap_io/repositories/authentication_repository.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
 import 'package:atrap_io/repositories/tracker_repository.dart';
@@ -41,28 +42,34 @@ final Map<String, Widget> routes = {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!kIsWeb) {
-    await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-    if (kDebugMode) {
-      await FirebaseAuth.instance.useAuthEmulator(
-        Platform.isAndroid ? "10.0.2.2" : "localhost",
-        9099,
-      );
+  if (kDebugMode) {
+    String host = "localhost";
 
-      FirebaseFirestore.instance.useFirestoreEmulator(
-        Platform.isAndroid ? "10.0.2.2" : "localhost",
-        8080,
-      );
-
-      FirebaseFunctions.instance.useFunctionsEmulator(
-        Platform.isAndroid ? "10.0.2.2" : "localhost",
-        5001,
-      );
-
-      await FirebaseFirestore.instance.terminate();
-      await FirebaseFirestore.instance.clearPersistence();
+    if (!kIsWeb) {
+      host = Platform.isAndroid ? "10.0.2.2" : host;
     }
+
+    await FirebaseAuth.instance.useAuthEmulator(
+      host,
+      9099,
+    );
+
+    FirebaseFirestore.instance.useFirestoreEmulator(
+      host,
+      8080,
+    );
+
+    FirebaseFunctions.instance.useFunctionsEmulator(
+      host,
+      5001,
+    );
+
+    // await FirebaseFirestore.instance.terminate();
+    // await FirebaseFirestore.instance.clearPersistence();
   }
 
   runApp(const App());
