@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:atrap_io/exceptions/link_exception.dart';
 import 'package:atrap_io/helpers/link_helper.dart';
 import 'package:atrap_io/models/link_model.dart';

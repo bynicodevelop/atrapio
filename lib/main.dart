@@ -67,9 +67,6 @@ Future<void> main() async {
       host,
       5001,
     );
-
-    // await FirebaseFirestore.instance.terminate();
-    // await FirebaseFirestore.instance.clearPersistence();
   }
 
   runApp(const App());
