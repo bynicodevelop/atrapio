@@ -1,5 +1,6 @@
 import 'package:atrap_io/components/add_link_component.dart';
 import 'package:atrap_io/responsive.dart';
+import 'package:atrap_io/screens/link_editor_stepper.dart';
 import 'package:atrap_io/screens/settings_screen.dart';
 import 'package:atrap_io/screens/views/link_view.dart';
 import 'package:atrap_io/services/main_navigation/main_navigation_bloc.dart';
@@ -38,6 +39,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: IconButton(
                   onPressed: () => Navigator.pushNamed(
                     context,
+                    LinkEditorStepper.routeName,
+                  ),
+                  icon: const FaIcon(
+                    FontAwesomeIcons.link,
+                    size: 20.0,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 10.0,
+                ),
+                child: IconButton(
+                  onPressed: () => Navigator.pushNamed(
+                    context,
                     SettingsScreen.routeName,
                   ),
                   icon: const FaIcon(
@@ -45,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 20.0,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           body: PageView(

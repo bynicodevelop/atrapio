@@ -18,28 +18,28 @@ class AddLinkBloc extends Bloc<AddLinkEvent, AddLinkState> {
       Map<String, String> metadata = {};
       emit(AddLinkLoading());
 
-      try {
-        String linkId = await linkRepository.getTemporaryLink();
+      // try {
+      String linkId = await linkRepository.getTemporaryLink();
 
-        await linkRepository.createLink(
-          {
-            ...event.params,
-            ...{
-              "name": metadata["title"],
-              "userId": authenticationRepository.userId,
-              "linkId": linkId,
-              "metadata": metadata,
-            },
+      await linkRepository.createLink(
+        {
+          ...event.params,
+          ...{
+            "name": metadata["title"],
+            "userId": authenticationRepository.userId,
+            "linkId": linkId,
+            "metadata": metadata,
           },
-        );
+        },
+      );
 
-        emit(AddLinkSuccess());
-      } catch (e) {
-        // TODO: Add crash analytics
-        emit(AddLinkFailure(
-          error: e.toString(),
-        ));
-      }
+      emit(AddLinkSuccess());
+      // } catch (e) {
+      //   // TODO: Add crash analytics
+      //   emit(AddLinkFailure(
+      //     error: e.toString(),
+      //   ));
+      // }
     });
   }
 }

@@ -1,16 +1,19 @@
 import 'package:atrap_io/exceptions/link_exception.dart';
 import 'package:atrap_io/helpers/link_helper.dart';
 import 'package:atrap_io/models/link_model.dart';
+import 'package:atrap_io/repositories/upload_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class LinkRepository {
   final FirebaseFirestore firestore;
   final FirebaseFunctions functions;
+  final UploadRepository uploadRepository;
 
   const LinkRepository({
     required this.firestore,
     required this.functions,
+    required this.uploadRepository,
   });
 
   Stream<List<LinkModel>> links(String userId) => firestore
@@ -62,8 +65,23 @@ class LinkRepository {
       params["src"] = link;
     }
 
+    String storagePath = "users/${params["userId"]}/links/${params["linkId"]}";
+
+    final String fileName = uploadRepository.generateName(
+      params["optin_param_model"]["image"],
+    );
+
+    params["optin_param_model"]["image"] = await uploadRepository.uploadFile(
+      params["optin_param_model"]["image"],
+      fileName,
+      storagePath,
+    );
+
     LinkModel linkModel = LinkModel.fromJson(params);
 
+    print(
+      linkModel.toJson(),
+    );
     await firestore
         .collection("users")
         .doc(params["userId"])
@@ -73,6 +91,45 @@ class LinkRepository {
           linkModel.toJson(),
         );
   }
+
+  // String _getFileName(String path) {
+  //   final List<String> split = path.split("/");
+  //   final List<String> nameSplited = split.last.split(".");
+
+  //   final String ext = nameSplited.last;
+  //   final String basename =
+  //       md5.convert(utf8.encode(nameSplited.first)).toString();
+
+  //   return "$basename.$ext";
+  // }
+
+  // Future<String> _uplaodImage(
+  //   String path,
+  //   String fileName,
+  //   String storagePath,
+  // ) async {
+  //   String url = "";
+
+  //   try {
+  //     final Reference storageReference = storage.ref("$storagePath/$fileName");
+
+  //     if (!kIsWeb) {
+  //       final UploadTask task = storageReference.putFile(
+  //         File(path),
+  //       );
+
+  //       await task;
+
+  //       url = await storageReference.getDownloadURL();
+  //     }
+
+  //     return url;
+  //   } catch (e) {
+  //     print(e);
+  //   }
+
+  //   return url;
+  // }
 
   Future<String> getTemporaryLink() async {
     HttpsCallable httpsCallable =
