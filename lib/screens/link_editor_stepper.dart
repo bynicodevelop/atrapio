@@ -5,6 +5,7 @@ import 'package:atrap_io/screens/link_editors_views/options_link_view.dart';
 import 'package:atrap_io/screens/link_editors_views/start_link_editor_view.dart';
 import 'package:atrap_io/screens/link_editors_views/type_link_view.dart';
 import 'package:atrap_io/services/link_editor/link_editor_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +27,7 @@ class _LinkEditorStepperState extends State<LinkEditorStepper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: !kIsWeb,
         title: const Text('Link Editor'),
       ),
       body: BlocConsumer<LinkEditorBloc, LinkEditorState>(

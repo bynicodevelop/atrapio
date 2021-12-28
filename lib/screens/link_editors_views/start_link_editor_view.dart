@@ -35,6 +35,7 @@ class _StartLinkEditorViewState extends State<StartLinkEditorView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             UrlTextField(
+              required: true,
               controller: _srcController,
               labelText: "Entrer une url",
               errorText: "Vous devez saisir une url valide",

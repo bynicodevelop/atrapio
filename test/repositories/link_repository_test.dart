@@ -473,7 +473,6 @@ void main() {
 
     test("Should delete link with success", () async {
       // ARRANGE
-      final MockFirebaseStorage storage = MockFirebaseStorage();
       DocumentReferenceMock documentReferenceMock = DocumentReferenceMock();
 
       when(documentReferenceMock.delete()).thenAnswer(

@@ -32,21 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             title: const Text("@trap.io"),
             actions: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: 10.0,
-                ),
-                child: IconButton(
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    LinkEditorStepper.routeName,
+              if (!Responsive.isMobile(context))
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10.0,
                   ),
-                  icon: const FaIcon(
-                    FontAwesomeIcons.link,
-                    size: 20.0,
+                  child: TextButton(
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      LinkEditorStepper.routeName,
+                    ),
+                    child: const Text(
+                      "Créer un lien",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.only(
                   right: 10.0,
@@ -78,36 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           floatingActionButton:
               Responsive.isMobile(context) ? const AddLinkComponent() : null,
-          // bottomNavigationBar: BottomNavigationBar(
-          //   items: <BottomNavigationBarItem>[
-          //     BottomNavigationBarItem(
-          //       icon: const Padding(
-          //         padding: EdgeInsets.all(4.0),
-          //         child: FaIcon(
-          //           FontAwesomeIcons.home,
-          //           size: 20.0,
-          //         ),
-          //       ),
-          //       label: t(context)!.bottomNavigationHome,
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: const Padding(
-          //         padding: EdgeInsets.all(4.0),
-          //         child: FaIcon(
-          //           FontAwesomeIcons.link,
-          //           size: 20.0,
-          //         ),
-          //       ),
-          //       label: t(context)!.bottomNavigationLinks,
-          //     ),
-          //   ],
-          //   onTap: (index) => context.read<MainNavigationBloc>().add(
-          //         OnNavigateEvent(index),
-          //       ),
-          //   currentIndex: (context.watch<MainNavigationBloc>().state
-          //           as MainNavigationInitialState)
-          //       .currentIndex,
-          // ),
         ),
       ),
     );

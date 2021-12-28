@@ -19,7 +19,6 @@ class LinkView extends StatefulWidget {
 }
 
 class _LinkViewState extends State<LinkView> {
-  final ScrollController _linkFormSrollController = ScrollController();
   final ScrollController _linkListSrollController = ScrollController();
 
   CardListLinkComponent _itemCard(
@@ -141,34 +140,6 @@ class _LinkViewState extends State<LinkView> {
   Row _viewWithRow(BuildContext context, ListLinksInitialState state) {
     return Row(
       children: [
-        Container(
-          width: 350,
-          decoration: const BoxDecoration(
-            border: Border(
-              right: BorderSide(
-                width: 1.0,
-                color: Colors.blue,
-              ),
-            ),
-            color: Colors.white,
-          ),
-          child: ListView(
-            controller: _linkFormSrollController,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 15.0,
-                ),
-                child: Text(
-                  t(context)!.linkFormCreatorTitle,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              LinkFormComponent(),
-            ],
-          ),
-        ),
         Expanded(
           child: state.links.isEmpty
               ? Center(
@@ -211,19 +182,6 @@ class _LinkViewState extends State<LinkView> {
       bloc: context.read<ListLinksBloc>()..add(OnLoadListLinksEvent()),
       builder: (BuildContext context, state) {
         if (state is ListLinksInitialState) {
-          // if (state.links.isEmpty) {
-          //   return Center(
-          //     child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Text(
-          //           t(context)!.noLinkLabel,
-          //         ),
-          //       ],
-          //     ),
-          //   );
-          // }
-
           return Responsive(
             mobile: state.links.isEmpty
                 ? Center(

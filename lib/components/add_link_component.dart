@@ -1,4 +1,5 @@
 import 'package:atrap_io/screens/link_editor.dart';
+import 'package:atrap_io/screens/link_editor_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,11 +14,9 @@ class _AddLinkComponentState extends State<AddLinkComponent> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => Navigator.push(
+      onPressed: () => Navigator.pushNamed(
         context,
-        MaterialPageRoute(
-          builder: (context) => const LinkEditor(),
-        ),
+        LinkEditorStepper.routeName,
       ),
       child: const FaIcon(
         FontAwesomeIcons.plus,
