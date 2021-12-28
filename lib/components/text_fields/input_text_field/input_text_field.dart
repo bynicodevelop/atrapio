@@ -60,7 +60,8 @@ class _InputTextFieldState extends State<InputTextField> {
       builder: (context, state) {
         bool showError = false;
 
-        if ((state as InputTextFieldInitialState).key == _key) {
+        if ((state as InputTextFieldInitialState).key == _key &&
+            widget.required) {
           showError = state.isValid == StringTextFieldEnum.invalid;
 
           if (state.value.isNotEmpty) {

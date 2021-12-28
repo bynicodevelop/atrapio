@@ -8,6 +8,7 @@ class UrlTextField extends StatefulWidget {
   final String? helperText;
   final String errorText;
   final Function(bool) onChanged;
+  final bool required;
 
   const UrlTextField({
     Key? key,
@@ -16,6 +17,7 @@ class UrlTextField extends StatefulWidget {
     required this.errorText,
     required this.onChanged,
     this.helperText,
+    this.required = false,
   }) : super(key: key);
 
   @override
@@ -41,16 +43,35 @@ class _UrlTextFieldState extends State<UrlTextField> {
     return BlocConsumer<UrlTextFieldBloc, UrlTextFieldState>(
       listener: (context, state) {
         if (state is UrlTextFieldInitialState) {
-          widget.onChanged(state.isValid == UrlTextFieldEnum.invalid);
+          if (widget.required) {
+            widget.onChanged(state.isValid == UrlTextFieldEnum.invalid);
+          } else {
+            widget.onChanged(true);
+          }
         }
       },
       builder: (context, state) {
-        if (state is UrlTextFieldInitialState && state.url.isNotEmpty) {
-          widget.controller.text = state.url;
+        bool showError = false;
 
-          widget.controller.selection = TextSelection.fromPosition(TextPosition(
-            offset: widget.controller.text.length,
-          ));
+        if (widget.required) {
+          if (state is UrlTextFieldInitialState) {
+            if (state.url.isNotEmpty) {
+              showError = state.isValid == UrlTextFieldEnum.invalid;
+
+              // widget.controller.text = state.url;
+
+              // widget.controller.selection =
+              //     TextSelection.fromPosition(TextPosition(
+              //   offset: widget.controller.text.length,
+              // ));
+            } else {
+              showError = true;
+            }
+          }
+        } else {
+          if (state is UrlTextFieldInitialState && state.url.isNotEmpty) {
+            showError = state.isValid == UrlTextFieldEnum.invalid;
+          }
         }
 
         return Padding(
@@ -62,11 +83,9 @@ class _UrlTextFieldState extends State<UrlTextField> {
             controller: widget.controller,
             decoration: InputDecoration(
               helperText: widget.helperText,
+              helperMaxLines: 2,
               hintText: widget.labelText,
-              errorText: (state as UrlTextFieldInitialState).isValid !=
-                      UrlTextFieldEnum.invalid
-                  ? null
-                  : widget.errorText,
+              errorText: !showError ? null : widget.errorText,
             ),
           ),
         );

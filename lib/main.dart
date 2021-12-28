@@ -6,6 +6,7 @@ import 'package:atrap_io/firebase_options.dart';
 import 'package:atrap_io/repositories/authentication_repository.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
 import 'package:atrap_io/repositories/tracker_repository.dart';
+import 'package:atrap_io/repositories/upload_repository.dart';
 import 'package:atrap_io/screens/get_tracker_screen.dart';
 import 'package:atrap_io/screens/link_details_screen.dart';
 import 'package:atrap_io/screens/link_editor_stepper.dart';
@@ -103,10 +104,14 @@ class App extends StatelessWidget {
       firebaseAuth: FirebaseAuth.instance,
     );
 
+    UploadRepository uploadRepository = UploadRepository(
+      storage: FirebaseStorage.instance,
+    );
+
     LinkRepository linkRepository = LinkRepository(
       firestore: FirebaseFirestore.instance,
       functions: FirebaseFunctions.instance,
-      storage: FirebaseStorage.instance,
+      uploadRepository: uploadRepository,
     );
 
     TrackerRepository trackerRepository = TrackerRepository(
