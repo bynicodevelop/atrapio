@@ -210,5 +210,17 @@
     "trackingIdCopiedMessage": "Le script a été copié.",
     "@trackingIdCopiedMessage": {
       "description": "Le script a été copié."
+    },
+    "linkDetailsTitle": "Détails du lien",
+    "@linkDetailsTitle": {
+      "description": "Détails du lien"
+    },
+    "linkDetailsInHour": "Dans l'heure",
+    "@linkDetailsInHour": {
+      "description": "Dans l'heure"
+    },
+    "linkDetailsInDay": "Dans la journée",
+    "@linkDetailsInDay": {
+      "description": "Dans la journée"
     }
 }

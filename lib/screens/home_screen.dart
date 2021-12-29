@@ -1,5 +1,6 @@
 import 'package:atrap_io/components/add_link_component.dart';
 import 'package:atrap_io/responsive.dart';
+import 'package:atrap_io/screens/link_editor_stepper.dart';
 import 'package:atrap_io/screens/settings_screen.dart';
 import 'package:atrap_io/screens/views/link_view.dart';
 import 'package:atrap_io/services/main_navigation/main_navigation_bloc.dart';
@@ -31,6 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             title: const Text("@trap.io"),
             actions: [
+              if (!Responsive.isMobile(context))
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10.0,
+                  ),
+                  child: TextButton(
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      LinkEditorStepper.routeName,
+                    ),
+                    child: const Text(
+                      "Créer un lien",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.only(
                   right: 10.0,
@@ -45,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 20.0,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           body: PageView(
@@ -62,36 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           floatingActionButton:
               Responsive.isMobile(context) ? const AddLinkComponent() : null,
-          // bottomNavigationBar: BottomNavigationBar(
-          //   items: <BottomNavigationBarItem>[
-          //     BottomNavigationBarItem(
-          //       icon: const Padding(
-          //         padding: EdgeInsets.all(4.0),
-          //         child: FaIcon(
-          //           FontAwesomeIcons.home,
-          //           size: 20.0,
-          //         ),
-          //       ),
-          //       label: t(context)!.bottomNavigationHome,
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: const Padding(
-          //         padding: EdgeInsets.all(4.0),
-          //         child: FaIcon(
-          //           FontAwesomeIcons.link,
-          //           size: 20.0,
-          //         ),
-          //       ),
-          //       label: t(context)!.bottomNavigationLinks,
-          //     ),
-          //   ],
-          //   onTap: (index) => context.read<MainNavigationBloc>().add(
-          //         OnNavigateEvent(index),
-          //       ),
-          //   currentIndex: (context.watch<MainNavigationBloc>().state
-          //           as MainNavigationInitialState)
-          //       .currentIndex,
-          // ),
         ),
       ),
     );

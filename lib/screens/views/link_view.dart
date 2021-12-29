@@ -1,8 +1,6 @@
-import 'package:atrap_io/components/link_form_component.dart';
-import 'package:atrap_io/components/update_link_form_component.dart';
+import 'package:atrap_io/components/card_list_link_component.dart';
 import 'package:atrap_io/config/constants.dart';
 import 'package:atrap_io/helpers/translate.dart';
-import 'package:atrap_io/models/link_model.dart';
 import 'package:atrap_io/responsive.dart';
 import 'package:atrap_io/services/delete_link/delete_link_bloc.dart';
 import 'package:atrap_io/services/list_links/list_links_bloc.dart';
@@ -20,21 +18,9 @@ class LinkView extends StatefulWidget {
 }
 
 class _LinkViewState extends State<LinkView> {
-  final ScrollController _linkFormSrollController = ScrollController();
   final ScrollController _linkListSrollController = ScrollController();
 
-  void _modal(
-    BuildContext context,
-    LinkModel linkModel,
-  ) =>
-      showModalBottomSheet(
-        context: context,
-        builder: (context) => UpdateLinkFormComponent(
-          linkModel: linkModel,
-        ),
-      );
-
-  Card _itemCard(
+  CardListLinkComponent _itemCard(
     BuildContext context,
     ListLinksInitialState state,
     int index,
@@ -81,29 +67,9 @@ class _LinkViewState extends State<LinkView> {
       );
     }
 
-    return Card(
-      child: ListTile(
-        onLongPress: () => _modal(
-          context,
-          state.links[index],
-        ),
-        title: Text(
-          state.links[index].name.isNotEmpty
-              ? state.links[index].name
-              : "$kDomain/l/${state.links[index].linkId}",
-        ),
-        subtitle: Text(
-          state.links[index].src,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: SizedBox(
-          width: actions.length * 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: actions,
-          ),
-        ),
-      ),
+    return CardListLinkComponent(
+      link: state.links[index],
+      actions: actions,
     );
   }
 
@@ -173,34 +139,6 @@ class _LinkViewState extends State<LinkView> {
   Row _viewWithRow(BuildContext context, ListLinksInitialState state) {
     return Row(
       children: [
-        Container(
-          width: 350,
-          decoration: const BoxDecoration(
-            border: Border(
-              right: BorderSide(
-                width: 1.0,
-                color: Colors.blue,
-              ),
-            ),
-            color: Colors.white,
-          ),
-          child: ListView(
-            controller: _linkFormSrollController,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 15.0,
-                ),
-                child: Text(
-                  t(context)!.linkFormCreatorTitle,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              LinkFormComponent(),
-            ],
-          ),
-        ),
         Expanded(
           child: state.links.isEmpty
               ? Center(
@@ -243,19 +181,6 @@ class _LinkViewState extends State<LinkView> {
       bloc: context.read<ListLinksBloc>()..add(OnLoadListLinksEvent()),
       builder: (BuildContext context, state) {
         if (state is ListLinksInitialState) {
-          // if (state.links.isEmpty) {
-          //   return Center(
-          //     child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Text(
-          //           t(context)!.noLinkLabel,
-          //         ),
-          //       ],
-          //     ),
-          //   );
-          // }
-
           return Responsive(
             mobile: state.links.isEmpty
                 ? Center(

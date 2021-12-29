@@ -64,16 +64,16 @@ jobs:
         with:
           channel: stable
 
-      - name: Create app.js file
-        id: app
+      - name: Create firebase_options.dart file
+        id: firebase_options
         uses: timheuer/base64-to-file@v1.1
         with:
-          fileName: "app.js"
-          encodedString: ${{ secrets.WEB_SCRIPT_JS }}
+          fileName: "firebase_options.dart"
+          encodedString: ${{ secrets.FIREBASE_OPTIONS }}
 
-      - name: Move app.js into project
+      - name: Move firebase_options.dart into project
         run: |
-          mv ${{ steps.app.outputs.filePath }} ./web/scripts/
+          mv ${{ steps.app.outputs.filePath }} ./lib
 
       - name: Create .firebaserc file
         id: firebaserc
