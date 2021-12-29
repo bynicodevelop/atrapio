@@ -1,7 +1,6 @@
 import 'package:atrap_io/exceptions/link_exception.dart';
 import 'package:atrap_io/models/link_model.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
-import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 

@@ -79,9 +79,6 @@ class LinkRepository {
 
     LinkModel linkModel = LinkModel.fromJson(params);
 
-    print(
-      linkModel.toJson(),
-    );
     await firestore
         .collection("users")
         .doc(params["userId"])
@@ -91,45 +88,6 @@ class LinkRepository {
           linkModel.toJson(),
         );
   }
-
-  // String _getFileName(String path) {
-  //   final List<String> split = path.split("/");
-  //   final List<String> nameSplited = split.last.split(".");
-
-  //   final String ext = nameSplited.last;
-  //   final String basename =
-  //       md5.convert(utf8.encode(nameSplited.first)).toString();
-
-  //   return "$basename.$ext";
-  // }
-
-  // Future<String> _uplaodImage(
-  //   String path,
-  //   String fileName,
-  //   String storagePath,
-  // ) async {
-  //   String url = "";
-
-  //   try {
-  //     final Reference storageReference = storage.ref("$storagePath/$fileName");
-
-  //     if (!kIsWeb) {
-  //       final UploadTask task = storageReference.putFile(
-  //         File(path),
-  //       );
-
-  //       await task;
-
-  //       url = await storageReference.getDownloadURL();
-  //     }
-
-  //     return url;
-  //   } catch (e) {
-  //     print(e);
-  //   }
-
-  //   return url;
-  // }
 
   Future<String> getTemporaryLink() async {
     HttpsCallable httpsCallable =

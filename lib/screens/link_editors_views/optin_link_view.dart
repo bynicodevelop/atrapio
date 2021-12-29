@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 const List<OptinModel> optins = [
   OptinModel(
-    name: "Optin Redirection",
-    description: "Permet de rediriger un utilisateur est un lien spécifique",
+    name: "Popin Redirection",
+    description:
+        "Affiche une popin pour attirer l'attention de l'utilisateur et le rediriger vers une page",
   ),
 ];
 
@@ -15,24 +16,77 @@ class OptinLinkView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: optins.length,
-        itemBuilder: (context, index) {
-          final OptinModel optin = optins[index];
+    return CustomScrollView(
+      slivers: [
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 20.0,
+                  bottom: 20.0,
+                ),
+                child: Text(
+                  "Quel type optin voulez-vous configurer ?",
+                  style: Theme.of(context).textTheme.headline6,
+                  textAlign: TextAlign.center,
+                ),
+              )
+            ],
+            addAutomaticKeepAlives: true,
+            addRepaintBoundaries: true,
+            addSemanticIndexes: true,
+            semanticIndexOffset: 0,
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            optins
+                .map((optin) => Card(
+                      child: ListTile(
+                        title: Text(optin.name),
+                        subtitle: Text(optin.description),
+                        onTap: () => context.read<LinkEditorBloc>().add(
+                              OnLinkEditorUpdatedEvent(
+                                data: {
+                                  "optin_model": optin,
+                                },
+                              ),
+                            ),
+                      ),
+                    ))
+                .toList(),
+            addAutomaticKeepAlives: true,
+            addRepaintBoundaries: true,
+            addSemanticIndexes: true,
+            semanticIndexOffset: 0,
+          ),
+        ),
+      ],
+    );
 
-          return Card(
-            child: ListTile(
-              title: Text(optin.name),
-              subtitle: Text(optin.description),
-              onTap: () => context.read<LinkEditorBloc>().add(
-                    OnLinkEditorUpdatedEvent(
-                      data: {
-                        "optin_model": optin,
-                      },
-                    ),
-                  ),
-            ),
-          );
-        });
+    // ListView.builder(
+    //   padding: const EdgeInsets.only(
+    //     top: 16,
+    //   ),
+    //   itemCount: optins.length,
+    //   itemBuilder: (context, index) {
+    //     final OptinModel optin = optins[index];
+
+    //     return Card(
+    //       child: ListTile(
+    //         title: Text(optin.name),
+    //         subtitle: Text(optin.description),
+    //         onTap: () => context.read<LinkEditorBloc>().add(
+    //               OnLinkEditorUpdatedEvent(
+    //                 data: {
+    //                   "optin_model": optin,
+    //                 },
+    //               ),
+    //             ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 }

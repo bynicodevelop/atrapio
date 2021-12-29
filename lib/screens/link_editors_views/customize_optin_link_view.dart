@@ -36,8 +36,8 @@ class _CustomizeOptinLinkViewState extends State<CustomizeOptinLinkView> {
         ),
       builder: (context, state) {
         return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             BlocConsumer<ImagePickerBloc, ImagePickerState>(
               listener: (context, state) {
@@ -100,11 +100,16 @@ class _CustomizeOptinLinkViewState extends State<CustomizeOptinLinkView> {
             ),
             Row(
               children: [
-                TextButton(
-                  onPressed: () => context.read<LinkEditorBloc>().add(
-                        OnPreviewLinkEditorEvent(),
-                      ),
-                  child: const Text("Cancel"),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10.0,
+                  ),
+                  child: TextButton(
+                    onPressed: () => context.read<LinkEditorBloc>().add(
+                          OnPreviewLinkEditorEvent(),
+                        ),
+                    child: const Text("Cancel"),
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: (context.watch<TextFieldFormBloc>().state

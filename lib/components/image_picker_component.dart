@@ -50,29 +50,25 @@ class ImagePickerComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ImagePickerBloc, ImagePickerState>(
-      builder: (context, state) {
-        debugPrint(state.toString());
-
-        return Column(
-          children: [
-            Card(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: _wrapper(
-                InkWell(
-                  onTap: () => context.read<ImagePickerBloc>().add(
-                        OnClickImagePicker(
-                          refresh: DateTime.now().millisecondsSinceEpoch,
-                        ),
+      builder: (context, state) => Column(
+        children: [
+          Card(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: _wrapper(
+              InkWell(
+                onTap: () => context.read<ImagePickerBloc>().add(
+                      OnClickImagePicker(
+                        refresh: DateTime.now().millisecondsSinceEpoch,
                       ),
-                  child: (state as ImagePickerInitialState).image.isNotEmpty
-                      ? _imageRender(state.image)
-                      : _uploadButton(context),
-                ),
+                    ),
+                child: (state as ImagePickerInitialState).image.isNotEmpty
+                    ? _imageRender(state.image)
+                    : _uploadButton(context),
               ),
             ),
-          ],
-        );
-      },
+          ),
+        ],
+      ),
     );
   }
 }

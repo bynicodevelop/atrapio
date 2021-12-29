@@ -1,5 +1,4 @@
 import 'package:atrap_io/components/card_list_link_component.dart';
-import 'package:atrap_io/components/link_form_component.dart';
 import 'package:atrap_io/config/constants.dart';
 import 'package:atrap_io/helpers/translate.dart';
 import 'package:atrap_io/responsive.dart';

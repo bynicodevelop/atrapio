@@ -46,7 +46,20 @@ class _OptionsLinkViewState extends State<OptionsLinkView> {
               ),
             builder: (context, state) {
               return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 20.0,
+                    ),
+                    child: Text(
+                      "Configuration des options de tracking",
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const Text(
+                      "Les options de tracking permet de donner des informations supplémentaires au outils de traking comme Google Analytics pour améliorer le suivis de vos visiteurs."),
                   InputTextField(
                     controller: _utmSourceController,
                     labelText: t(context)!.linkFormCreatorUtmSource,
@@ -91,7 +104,7 @@ class _OptionsLinkViewState extends State<OptionsLinkView> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                      bottom: 10.0,
+                      bottom: 50.0,
                     ),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,

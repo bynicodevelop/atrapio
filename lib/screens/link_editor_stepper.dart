@@ -1,3 +1,4 @@
+import 'package:atrap_io/responsive.dart';
 import 'package:atrap_io/screens/link_editors_views/customize_optin_link_view.dart';
 import 'package:atrap_io/screens/link_editors_views/finalize_link_view.dart';
 import 'package:atrap_io/screens/link_editors_views/optin_link_view.dart';
@@ -47,8 +48,10 @@ class _LinkEditorStepperState extends State<LinkEditorStepper> {
         },
         builder: (context, state) {
           return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
+            padding: EdgeInsets.symmetric(
+              horizontal: Responsive.isMobile(context)
+                  ? 8.0
+                  : (MediaQuery.of(context).size.width - 400) / 2,
             ),
             child: PageView(
               physics: const NeverScrollableScrollPhysics(),
