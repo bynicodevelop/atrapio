@@ -1,8 +1,8 @@
 import 'package:atrap_io/helpers/translate.dart';
 import 'package:atrap_io/responsive.dart';
 import 'package:atrap_io/services/add_link/add_link_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LinkFormComponent extends StatelessWidget {
   final TextEditingController srcController = TextEditingController();

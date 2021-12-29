@@ -1,16 +1,19 @@
 import 'package:atrap_io/exceptions/link_exception.dart';
 import 'package:atrap_io/helpers/link_helper.dart';
 import 'package:atrap_io/models/link_model.dart';
+import 'package:atrap_io/repositories/upload_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class LinkRepository {
   final FirebaseFirestore firestore;
   final FirebaseFunctions functions;
+  final UploadRepository uploadRepository;
 
   const LinkRepository({
     required this.firestore,
     required this.functions,
+    required this.uploadRepository,
   });
 
   Stream<List<LinkModel>> links(String userId) => firestore
@@ -61,6 +64,18 @@ class LinkRepository {
     if (link.isNotEmpty) {
       params["src"] = link;
     }
+
+    String storagePath = "users/${params["userId"]}/links/${params["linkId"]}";
+
+    final String fileName = uploadRepository.generateName(
+      params["optin_param_model"]["image"],
+    );
+
+    params["optin_param_model"]["image"] = await uploadRepository.uploadFile(
+      params["optin_param_model"]["image"],
+      fileName,
+      storagePath,
+    );
 
     LinkModel linkModel = LinkModel.fromJson(params);
 

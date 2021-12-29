@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:atrap_io/bootstrap_screen.dart';
+import 'package:atrap_io/components/text_fields/text_field_provider.dart';
 import 'package:atrap_io/firebase_options.dart';
 import 'package:atrap_io/repositories/authentication_repository.dart';
 import 'package:atrap_io/repositories/link_repository.dart';
 import 'package:atrap_io/repositories/tracker_repository.dart';
+import 'package:atrap_io/repositories/upload_repository.dart';
 import 'package:atrap_io/screens/get_tracker_screen.dart';
 import 'package:atrap_io/screens/link_details_screen.dart';
+import 'package:atrap_io/screens/link_editor_stepper.dart';
 import 'package:atrap_io/screens/login_screen.dart';
 import 'package:atrap_io/screens/register_screen.dart';
 import 'package:atrap_io/screens/settings_screen.dart';
@@ -16,7 +19,9 @@ import 'package:atrap_io/services/app/app_bloc.dart';
 import 'package:atrap_io/services/auth_form/auth_form_bloc.dart';
 import 'package:atrap_io/services/delete_link/delete_link_bloc.dart';
 import 'package:atrap_io/services/generate_tracker/generate_tracker_bloc.dart';
+import 'package:atrap_io/services/image_picker/image_picker_bloc.dart';
 import 'package:atrap_io/services/link_details/link_details_bloc.dart';
+import 'package:atrap_io/services/link_editor/link_editor_bloc.dart';
 import 'package:atrap_io/services/list_links/list_links_bloc.dart';
 import 'package:atrap_io/services/login/login_bloc.dart';
 import 'package:atrap_io/services/logout/logout_bloc.dart';
@@ -25,6 +30,7 @@ import 'package:atrap_io/services/update_link/update_link_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +46,7 @@ final Map<String, Widget> routes = {
   StatisticsScreen.routeName: const StatisticsScreen(),
   GetTrackerScreen.routeName: const GetTrackerScreen(),
   LinKDetailsScreen.routeName: const LinKDetailsScreen(),
+  LinkEditorStepper.routeName: const LinkEditorStepper(),
 };
 
 Future<void> main() async {
@@ -56,20 +63,32 @@ Future<void> main() async {
       host = Platform.isAndroid ? "10.0.2.2" : host;
     }
 
-    await FirebaseAuth.instance.useAuthEmulator(
-      host,
-      9099,
-    );
+    try {
+      await FirebaseAuth.instance.useAuthEmulator(
+        host,
+        9099,
+      );
 
-    FirebaseFirestore.instance.useFirestoreEmulator(
-      host,
-      8080,
-    );
+      FirebaseFirestore.instance.useFirestoreEmulator(
+        host,
+        8080,
+      );
 
-    FirebaseFunctions.instance.useFunctionsEmulator(
-      host,
-      5001,
-    );
+      FirebaseFunctions.instance.useFunctionsEmulator(
+        host,
+        5001,
+      );
+
+      await FirebaseStorage.instance.useStorageEmulator(
+        host,
+        9199,
+      );
+    } catch (e) {
+      print(e);
+    }
+
+    await FirebaseFirestore.instance.terminate();
+    await FirebaseFirestore.instance.clearPersistence();
   }
 
   runApp(const App());
@@ -85,9 +104,14 @@ class App extends StatelessWidget {
       firebaseAuth: FirebaseAuth.instance,
     );
 
+    UploadRepository uploadRepository = UploadRepository(
+      storage: FirebaseStorage.instance,
+    );
+
     LinkRepository linkRepository = LinkRepository(
       firestore: FirebaseFirestore.instance,
       functions: FirebaseFunctions.instance,
+      uploadRepository: uploadRepository,
     );
 
     TrackerRepository trackerRepository = TrackerRepository(
@@ -155,9 +179,17 @@ class App extends StatelessWidget {
             trackerRepository: trackerRepository,
             authenticationRepository: authenticationRepository,
           ),
-        )
+        ),
+        BlocProvider(
+          create: (context) => LinkEditorBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ImagePickerBloc(),
+        ),
       ],
-      child: const AppView(),
+      child: const TextFieldProvider(
+        child: AppView(),
+      ),
     );
   }
 }

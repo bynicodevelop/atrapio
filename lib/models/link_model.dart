@@ -1,5 +1,9 @@
+import 'package:atrap_io/models/optin_model.dart';
+import 'package:atrap_io/models/optin_param_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+
+enum typeLinkEnum { short, optinLink }
 
 class LinkModel extends Equatable {
   final String uid;
@@ -14,6 +18,9 @@ class LinkModel extends Equatable {
   final String linkId;
   final String params;
   final int clicks;
+  final OptinModel? optinModel;
+  final OptinParamModel? optinParamModel;
+  final typeLinkEnum typeLink;
   final Map<String, dynamic> metadata;
   final Map<String, dynamic> stats;
   final DateTime? createdAt;
@@ -21,6 +28,9 @@ class LinkModel extends Equatable {
   const LinkModel({
     required this.uid,
     required this.src,
+    required this.typeLink,
+    this.optinModel,
+    this.optinParamModel,
     this.name = "",
     this.utmSource = "",
     this.utmMedium = "",
@@ -39,6 +49,7 @@ class LinkModel extends Equatable {
   Map<String, dynamic> toJson() => {
         "uid": uid,
         "src": src,
+        "type_link": typeLink.toString(),
         "name": name,
         "created_at": createdAt,
         "utm_source": utmSource,
@@ -52,11 +63,25 @@ class LinkModel extends Equatable {
         "stats": stats,
         "clicks": clicks,
         "params": params,
+        "optin_model": optinModel?.toJson(),
+        "optin_param_model": optinParamModel?.toJson(),
       };
 
   LinkModel.fromJson(Map<String, dynamic> json)
       : uid = json['uid'] ?? "",
         src = json['src'] ?? "",
+        typeLink = json['type_link'] != null
+            ? typeLinkEnum.values.firstWhere(
+                (element) => element.toString() == json['type_link'].toString(),
+                orElse: () => typeLinkEnum.short,
+              )
+            : typeLinkEnum.short,
+        optinModel = json['optin_model'] != null
+            ? OptinModel.fromJson(json['optin_model'])
+            : null,
+        optinParamModel = json['optin_param_model'] != null
+            ? OptinParamModel.fromJson(json['optin_param_model'])
+            : null,
         name = json['name'] ?? "",
         createdAt = json['created_at'] == null
             ? null
@@ -79,6 +104,8 @@ class LinkModel extends Equatable {
   List<Object?> get props => [
         uid,
         src,
+        optinModel,
+        optinParamModel,
         name,
         createdAt,
         utmSource,
